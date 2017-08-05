@@ -12,7 +12,7 @@ BunnyPhysicsComponent::BunnyPhysicsComponent(Entity &entity): PhysicsComponent(e
     y_ = 640;
 
     width_ = 64;
-    height_ = 128;
+    height_ = 96;
 
     boundingBox_.left = x_;
     boundingBox_.top = y_;
