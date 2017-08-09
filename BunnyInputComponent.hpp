@@ -7,8 +7,9 @@
 
 #include "SFML-Engine/InputComponent.hpp"
 #include "SFML-Engine/Input.hpp"
+#include "SFML-Engine/ComponentMessaging.hpp"
 
-class BunnyInputComponent: public InputComponent {
+class BunnyInputComponent: public InputComponent, public MessageHandler<INT> {
 private:
     sf::Vector2i inputVector_;
     int &x_ = inputVector_.x;
@@ -19,6 +20,8 @@ private:
     int jumpSpeed_;
     const bool *grounded_;
     const bool *hittingCeiling_;
+    const bool *hitWallLeft_;
+    const bool *hitWallRight_;
 public:
     const sf::Vector2i &inputVector = inputVector_;
     const int &x = inputVector_.x;
@@ -28,7 +31,9 @@ public:
 
     void update(double elapsed) override;
     void siblingComponentsInitialized() override;
-
+    void handleMessage(Message<INT> const &message) override {
+        std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
+    }
 
 };
 
