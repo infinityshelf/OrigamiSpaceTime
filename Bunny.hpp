@@ -8,10 +8,11 @@
 #include "SFML-Engine/Entity.hpp"
 
 class Bunny: public Entity {
+private:
+    void initializeComponents();
 public:
     Bunny();
     void update(double elapsed) override;
-private:
 };
 
 
