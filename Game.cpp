@@ -7,6 +7,7 @@
 #include "SFML-Engine/GraphicsComponent.hpp"
 #include "SFML-Engine/Input.hpp"
 #include "Bunny.hpp"
+#include "OrigamiWorld.hpp"
 
 const int blockSize = 64;
 const int width = blockSize * 56 / 2;
@@ -21,14 +22,18 @@ int Game::main(int argc, const char *argv[]) {
 
     sf::RenderWindow window(sf::VideoMode(width, height, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
 
+    //sf::RenderTexture texture;
+    //texture.create(width, height, true);
+
     window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(false);
     window.setKeyRepeatEnabled(false);
     window.setTitle(windowTitle);
 
     GraphicsComponent::setWindow(&window);
+    //BunnyGraphicsComponent::setRenderTexture(texture);
 
-    World *world = World::instance();
+    OrigamiWorld *world = OrigamiWorld::instance();
 
     for (int i = 0; i < width / blockSize; i++) {
         for (int j = 0; j < height / blockSize; j++) {
@@ -44,10 +49,11 @@ int Game::main(int argc, const char *argv[]) {
     }
     Bunny *player = new Bunny();
     world->addEntity(player);
-
+#define VARIABLE_TIME_STEP false
 #if VARIABLE_TIME_STEP
     sf::Clock elapsedClock;
     static double elapsed;
+    int targetFrameRate = 60;
 #endif
     Input::clearInput();
     while (window.isOpen()) {
