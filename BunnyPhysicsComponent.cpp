@@ -4,24 +4,27 @@
 
 #include "BunnyPhysicsComponent.hpp"
 #include "BunnyInputComponent.hpp"
+#include "OrigamiWorld.hpp"
+#include "Bunny.hpp"
 
 bool debug = false;
 
 BunnyPhysicsComponent::BunnyPhysicsComponent(Entity &entity): PhysicsComponent(entity) {
+    world_ = OrigamiWorld::instance();
     x_ = 320;
     y_ = 640;
 
     width_ = 64;
-    height_ = 96;
+    height_ = 64;
 
     boundingBox_.left = x_;
     boundingBox_.top = y_;
     boundingBox_.width = width_;
     boundingBox_.height = height_;
 
-    runSpeed_ = 20;
+    runSpeed_ = 10;
     jumpSpeed_ = 23;
-    maxFallSpeed_ = 21;
+    maxFallSpeed_ = 23;
 }
 
 void BunnyPhysicsComponent::update(double elapsed) {
@@ -57,11 +60,16 @@ void BunnyPhysicsComponent::update(double elapsed) {
             y_ = result->top + result->height;
         }
     }
-    grounded_ = (placeFree(x, y + 1, boundingBox_) != nullptr);
-    hittingCeiling_ = (placeFree(x, y - 1, boundingBox_) != nullptr);
-
+    setFlags();
 }
 
 void BunnyPhysicsComponent::siblingComponentsInitialized() {
     inputVector_ = &entity_.getComponent<BunnyInputComponent *>()->inputVector;
+}
+
+void BunnyPhysicsComponent::setFlags() {
+    grounded_ = (placeFree(x, y + 1, boundingBox_) != nullptr);
+    hittingCeiling_ = (placeFree(x, y - 1, boundingBox_) != nullptr);
+    hitWallLeft_ = (placeFree(x - 1, y, boundingBox_) != nullptr);
+    hitWallRight_ = (placeFree(x + 1, y, boundingBox_) != nullptr);
 }
