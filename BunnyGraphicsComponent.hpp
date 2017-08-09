@@ -6,15 +6,23 @@
 #define ORIGAMISPACETIME_BUNNYGRAPHICSCOMPONENT_HPP
 
 #include "SFML-Engine/GraphicsComponent.hpp"
+#include "SFML-Engine/ComponentMessaging.hpp"
 
-class BunnyGraphicsComponent: public GraphicsComponent {
+extern const std::string kBunnyWalk;
+extern const std::string kBunnyWalkFilePath;
+
+class BunnyGraphicsComponent: public GraphicsComponent, public MessageHandler<INT> {
 private:
     const sf::Vector2i *position_;
-    const sf::Vector2i *size_;
+    sf::Sprite sprite_;
 public:
     BunnyGraphicsComponent(Entity &entity);
     void update(double elapsed) override;
     void siblingComponentsInitialized() override;
+
+    void handleMessage(Message<INT> const &message) override {
+        std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
+    }
 
 
 };
