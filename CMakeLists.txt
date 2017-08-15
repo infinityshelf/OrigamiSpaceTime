@@ -20,7 +20,6 @@ set(SOURCE_FILES
         OrigamiWorld.hpp)
 
 add_executable(OrigamiSpaceTime ${SOURCE_FILES})
-
 add_subdirectory(SFML-Engine)
 
 target_link_libraries(OrigamiSpaceTime LINK_PUBLIC SFML-Engine -lsfml-graphics -lsfml-window -lsfml-system)
