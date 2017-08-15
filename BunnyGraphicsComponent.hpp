@@ -7,6 +7,10 @@
 
 #include "SFML-Engine/GraphicsComponent.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
+#include "Bunny.hpp"
+#include "BunnyPhysicsComponent.hpp"
+
+class BunnyPhysicsComponent;
 
 extern const std::string kBunnyWalk;
 extern const std::string kBunnyWalkFilePath;
@@ -15,16 +19,16 @@ class BunnyGraphicsComponent: public GraphicsComponent, public MessageHandler<IN
 private:
     const sf::Vector2i *position_;
     sf::Sprite sprite_;
+    Bunny &entity_;
+    sf::CircleShape teleportingRadius_;
+    BunnyPhysicsComponent *physicsComponent_;
 public:
-    BunnyGraphicsComponent(Entity &entity);
+    sf::CircleShape &teleportingRadius = teleportingRadius_;
+    explicit BunnyGraphicsComponent(Bunny &bunny);
     void update(double elapsed) override;
     void siblingComponentsInitialized() override;
-
-    void handleMessage(Message<INT> const &message) override {
-        std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
-    }
-
-
+    void handleMessage(Message<INT> const &message) override;
+    ~BunnyGraphicsComponent() override;
 };
 
 
