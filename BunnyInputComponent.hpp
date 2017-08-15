@@ -8,9 +8,16 @@
 #include "SFML-Engine/InputComponent.hpp"
 #include "SFML-Engine/Input.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
+#include "Bunny.hpp"
+#include "BunnyPhysicsComponent.hpp"
+#include "OrigamiWorld.hpp"
 
-class BunnyInputComponent: public InputComponent, public MessageHandler<INT> {
+class BunnyPhysicsComponent;
+
+class BunnyInputComponent: public InputComponent, public MessageDispatcher<INT> {
 private:
+    const uint16_t &currentFrame = OrigamiWorld::instance()->currentFrame;
+    Bunny &entity_;
     sf::Vector2i inputVector_;
     int &x_ = inputVector_.x;
     int &y_ = inputVector_.y;
@@ -18,23 +25,25 @@ private:
 
     int runSpeed_;
     int jumpSpeed_;
+    int maxFallSpeed_;
     const bool *grounded_;
     const bool *hittingCeiling_;
     const bool *hitWallLeft_;
     const bool *hitWallRight_;
+
+    BunnyPhysicsComponent *physicsComponent_;
+    void handleLeftClick();
 public:
     const sf::Vector2i &inputVector = inputVector_;
     const int &x = inputVector_.x;
     const int &y = inputVector_.y;
 
-    BunnyInputComponent(Entity &entity);
+    explicit BunnyInputComponent(Bunny &bunny);
 
     void update(double elapsed) override;
     void siblingComponentsInitialized() override;
-    void handleMessage(Message<INT> const &message) override {
-        std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
-    }
 
+    ~BunnyInputComponent() override;
 };
 
 

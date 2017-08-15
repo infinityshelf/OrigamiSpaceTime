@@ -3,12 +3,10 @@
 //
 
 #include "BunnyInputComponent.hpp"
-#include "BunnyPhysicsComponent.hpp"
-#include "OrigamiWorld.hpp"
 const bool debug = false;
 
-BunnyInputComponent::BunnyInputComponent(Entity &entity) : InputComponent(entity) {
-
+BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
+    addHandler(OrigamiWorld::instance());
 }
 
 void BunnyInputComponent::update(double elapsed) {
@@ -17,14 +15,14 @@ void BunnyInputComponent::update(double elapsed) {
     if (debug) Input::inputStruct.log();
     //x_ = 0;
     if (input.right) {
-        x_ += 3;
+        x_ += 1;
         if (x_ > runSpeed_) {
             x_ = runSpeed_;
         }
 
     }
     if (input.left) {
-        x_ -= 3;
+        x_ -= 1;
         if (x_ < -runSpeed_) {
             x_ = -runSpeed_;
         }
@@ -40,7 +38,12 @@ void BunnyInputComponent::update(double elapsed) {
             y_ -= jumpSpeed_;
         }
     } else {
-        y_ += 1;
+        if (y_ > maxFallSpeed_) {
+            y_ = maxFallSpeed_;
+        } else {
+            y_ += (currentFrame % 2 == 0) ? 1 : 0;
+        }
+
     }
 
     if (*hittingCeiling_ == true && y_ < 0) {
@@ -58,23 +61,51 @@ void BunnyInputComponent::update(double elapsed) {
     if (input.right == false && input.left == false) {
         x_ *= 0.5;
     }
+    // if left mouse button is pressed
+    // and if not teleporting
     if (input.leftMouseButtonPressed) {
-        if (OrigamiWorld::instance()->teleporting == false) {
-            OrigamiWorld::instance()->setTeleporting(true);
-        } else {
-            OrigamiWorld::instance()->setTeleporting(false);
-        }
+        handleLeftClick();
     }
 }
 
-void BunnyInputComponent::siblingComponentsInitialized() {
-    BunnyPhysicsComponent &physics = *entity_.getComponent<BunnyPhysicsComponent *>();
-
-    runSpeed_ = physics.runSpeed;
-    jumpSpeed_ = physics.jumpSpeed;
-    grounded_ = &physics.grounded;
-    hittingCeiling_ = &physics.hittingCeiling;
-    hitWallLeft_ = &physics.hitWallLeft;
-    hitWallRight_ = &physics.hitWallRight;
+void BunnyInputComponent::handleLeftClick() {
+    switch(entity_.state) {
+        case BUNNY_STATE_UNDEFINED: {
+            assert(false && "Bunny State was Undefined");
+            break;
+        }
+        case BUNNY_STATE_RECORDING: {
+            entity_.setState(BUNNY_STATE_TELEPORTING);
+            break;
+        }
+        case BUNNY_STATE_TELEPORTING: {
+            entity_.setState(BUNNY_STATE_PLAYING);
+            uint16_t data = 0;
+            Message<INT> message(data);
+            message.description = "teleported";
+            dispatchMessage(message);
+            break;
+        }
+        case BUNNY_STATE_PLAYING: {
+            // do nothing
+            break;
+        }
+    }
 
 }
+
+void BunnyInputComponent::siblingComponentsInitialized() {
+    physicsComponent_ = entity_.getComponent<BunnyPhysicsComponent *>();
+    if (physicsComponent_) {
+        runSpeed_ = physicsComponent_->runSpeed;
+        jumpSpeed_ = physicsComponent_->jumpSpeed;
+        maxFallSpeed_ = physicsComponent_->maxFallSpeed;
+        grounded_ = &physicsComponent_->grounded;
+        hittingCeiling_ = &physicsComponent_->hittingCeiling;
+        hitWallLeft_ = &physicsComponent_->hitWallLeft;
+        hitWallRight_ = &physicsComponent_->hitWallRight;
+    }
+
+}
+
+BunnyInputComponent::~BunnyInputComponent() = default;
