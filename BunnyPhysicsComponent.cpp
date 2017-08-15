@@ -5,14 +5,14 @@
 #include "Bunny.hpp"
 #include "OrigamiWorld.hpp"
 #include "BunnyPhysicsComponent.hpp"
-
+#include "BunnyGraphicsComponent.hpp"
 
 bool debug = false;
 
 BunnyPhysicsComponent::BunnyPhysicsComponent(Bunny &bunny): PhysicsComponent(bunny), entity_(bunny) {
     world_ = OrigamiWorld::instance();
     x_ = 32;
-    y_ = 32;
+    y_ = 32 * 5;
 
     width_ = 16;
     height_ = 16;
@@ -70,11 +70,21 @@ void BunnyPhysicsComponent::update(double elapsed) {
                     y_ = result->top + result->height;
                 }
             }
-            positions_.push_back(position);
+            size_t memory_in_bytes = sizeof(std::vector<sf::Vector2<uint16_t > >) + positions_.size() * sizeof(sf::Vector2<uint16_t >);
+            if (debug) std::cout << "size of positions_ in bytes: " << memory_in_bytes << std::endl;
+            assert(memory_in_bytes <= 1048576 && "Recording more than 1 mb : ");
+            positions_.push_back( sf::Vector2<uint16_t>(position.x, position.y));
+            if (positions_.size() == 1) {
+                startPoint_ = position_;
+            }
+            endPoint_ = position;
+            distanceTraveled_ = sqrtf(pow(startPoint.x - endPoint.x, 2) + pow(startPoint.y - endPoint.y, 2));
+            if (debug) std::cout << "distance: " << distanceTraveled << std::endl;
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
-            sf::Vector2f pos = positions_.at(positions_.size() - 1);
+            sf::Vector2<uint16_t > fpos = positions_.at(positions_.size() - 1);
+            sf::Vector2f pos = sf::Vector2f(fpos.x, fpos.y);
             position_ = pos;
             if (pos.y == 0 && pos.x == 0) {
                 assert(false && "Teleporting position should not be 0,0");
@@ -83,10 +93,14 @@ void BunnyPhysicsComponent::update(double elapsed) {
         }
         case BUNNY_STATE_PLAYING: {
             uint16_t currentFrame = OrigamiWorld::instance()->currentFrame;
-            if (currentFrame >= entity_.birthday && currentFrame <= entity_.deathday) {
-                position_ = positions_[currentFrame-1];
-            } else {
-                std::cout << "I don't even know" << std::endl;
+            if (OrigamiWorld::instance()->timeFrozen) {
+                unsigned int index = positions_.size() * graphicsComponent_->teleportationMultiplier;
+                sf::Vector2<uint16_t > pos = positions_[index];
+                position_ = sf::Vector2f(pos.x, pos.y);
+                if (debug) std::cout << "pos(" << pos.x << "," << pos.y << ")" <<std::endl;
+            } else if (currentFrame >= entity_.birthday && currentFrame <= entity_.deathday) {
+                sf::Vector2<uint16_t > uint16pos = positions_[currentFrame-1];
+                position_ = sf::Vector2f(uint16pos.x, uint16pos.y);
             }
             break;
         }
@@ -100,6 +114,7 @@ void BunnyPhysicsComponent::update(double elapsed) {
 
 void BunnyPhysicsComponent::siblingComponentsInitialized() {
     inputComponent_ = entity_.getComponent<BunnyInputComponent *>();
+    graphicsComponent_ = entity_.getComponent<BunnyGraphicsComponent *>();
     inputVector_ = (inputComponent_) ? &inputComponent_->inputVector : nullptr;
 }
 
@@ -112,7 +127,12 @@ void BunnyPhysicsComponent::setFlags() {
 
 void BunnyPhysicsComponent::handleMessage(Message<INT> const &message) {
     if (message.description == "teleported") {
-        endPoint_ = position_;
+        Bunny *player = new Bunny(BUNNY_STATE_RECORDING);
+        BunnyPhysicsComponent *physics = player->getComponent<BunnyPhysicsComponent *>();
+        if (physics) {
+            physics->position_ = BunnyGraphicsComponent::getMousePosition();
+        }
+        OrigamiWorld::instance()->addEntity(player);
     }
 }
 

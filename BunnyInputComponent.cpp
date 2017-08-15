@@ -3,6 +3,8 @@
 //
 
 #include "BunnyInputComponent.hpp"
+#include "BunnyGraphicsComponent.hpp"
+#include <cassert>
 const bool debug = false;
 
 BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
@@ -79,11 +81,15 @@ void BunnyInputComponent::handleLeftClick() {
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
-            entity_.setState(BUNNY_STATE_PLAYING);
-            uint16_t data = 0;
-            Message<INT> message(data);
-            message.description = "teleported";
-            dispatchMessage(message);
+            if (graphicsComponent_
+                && graphicsComponent_->shouldTeleport) {
+                entity_.setState(BUNNY_STATE_PLAYING);
+                uint16_t lifeSpan = entity_.deathday - entity_.birthday;
+                uint16_t data = entity_.deathday - lifeSpan * graphicsComponent_->teleportationMultiplier;
+                Message<INT> message(data);
+                message.description = "teleported";
+                dispatchMessage(message);
+            }
             break;
         }
         case BUNNY_STATE_PLAYING: {
@@ -96,6 +102,8 @@ void BunnyInputComponent::handleLeftClick() {
 
 void BunnyInputComponent::siblingComponentsInitialized() {
     physicsComponent_ = entity_.getComponent<BunnyPhysicsComponent *>();
+    graphicsComponent_ = entity_.getComponent<BunnyGraphicsComponent *>();
+    addHandler(physicsComponent_);
     if (physicsComponent_) {
         runSpeed_ = physicsComponent_->runSpeed;
         jumpSpeed_ = physicsComponent_->jumpSpeed;

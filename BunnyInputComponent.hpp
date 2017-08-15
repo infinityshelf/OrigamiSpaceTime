@@ -9,10 +9,12 @@
 #include "SFML-Engine/Input.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "Bunny.hpp"
-#include "BunnyPhysicsComponent.hpp"
+//#include "BunnyPhysicsComponent.hpp"
+//#include "BunnyGraphicsComponent.hpp"
 #include "OrigamiWorld.hpp"
 
 class BunnyPhysicsComponent;
+class BunnyGraphicsComponent;
 
 class BunnyInputComponent: public InputComponent, public MessageDispatcher<INT> {
 private:
@@ -31,6 +33,7 @@ private:
     const bool *hitWallRight_;
 
     BunnyPhysicsComponent *physicsComponent_;
+    BunnyGraphicsComponent *graphicsComponent_;
     void handleLeftClick();
 public:
     const sf::Vector2f &inputVector = inputVector_;

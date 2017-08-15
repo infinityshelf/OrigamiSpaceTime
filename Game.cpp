@@ -8,6 +8,7 @@
 #include "SFML-Engine/Input.hpp"
 #include "Bunny.hpp"
 #include "OrigamiWorld.hpp"
+#include "BunnyPhysicsComponent.hpp"
 
 const unsigned int blockSize = 16;
 const unsigned int width = blockSize * 56 / 2;
@@ -21,7 +22,7 @@ int Game::main(int argc, const char *argv[]) {
     }
 
     sf::RenderWindow window(sf::VideoMode(width, height, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
-    window.setSize(sf::Vector2u(width * 5,height * 5));
+    window.setSize(sf::Vector2u(width * 4,height * 4));
     window.setPosition(sf::Vector2i(100,0));
 
     window.setFramerateLimit(60);

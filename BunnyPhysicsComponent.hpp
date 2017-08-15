@@ -7,18 +7,20 @@
 
 #include "SFML-Engine/PhysicsComponent.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
+#include "SFML-Engine/GraphicsComponent.hpp"
 #include "Bunny.hpp"
 #include "BunnyInputComponent.hpp"
+#include "BunnyGraphicsComponent.hpp"
 
+class BunnyGraphicsComponent;
 class BunnyInputComponent;
 
 class BunnyPhysicsComponent: public PhysicsComponent, public MessageHandler<INT> {
 private:
     Bunny &entity_;
-    //bool active_;
     const sf::Vector2f *inputVector_;
 
-    std::vector<sf::Vector2f> positions_;
+    std::vector<sf::Vector2<uint16_t> > positions_;
 
 
     sf::IntRect boundingBox_;
@@ -34,9 +36,10 @@ private:
     void setFlags();
     sf::Vector2f startPoint_;
     sf::Vector2f endPoint_;
-    int distanceTraveled_ = 0;
+    float distanceTraveled_ = 0;
 
     BunnyInputComponent *inputComponent_;
+    BunnyGraphicsComponent *graphicsComponent_;
 public:
     //void setActive(bool active) { active_ = active; }
     const bool &grounded = grounded_;
@@ -54,7 +57,7 @@ public:
     void handleMessage(Message<INT> const &message) override;
     ~BunnyPhysicsComponent() override;
 
-    const int &distanceTraveled = distanceTraveled_;
+    const float &distanceTraveled = distanceTraveled_;
     const sf::Vector2f &startPoint = startPoint_;
     const sf::Vector2f &endPoint = endPoint_;
 };

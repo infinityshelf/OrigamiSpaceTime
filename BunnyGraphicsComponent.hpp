@@ -9,6 +9,7 @@
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "Bunny.hpp"
 #include "BunnyPhysicsComponent.hpp"
+#include <cmath>
 
 class BunnyPhysicsComponent;
 
@@ -21,7 +22,11 @@ private:
     sf::Sprite sprite_;
     Bunny &entity_;
     sf::CircleShape teleportingRadius_;
+    sf::CircleShape maxTeleportRadius_;
     BunnyPhysicsComponent *physicsComponent_;
+
+    bool shouldTeleport_ = false;
+    static float teleportationMultiplier_;
 public:
     sf::CircleShape &teleportingRadius = teleportingRadius_;
     explicit BunnyGraphicsComponent(Bunny &bunny);
@@ -29,6 +34,19 @@ public:
     void siblingComponentsInitialized() override;
     void handleMessage(Message<INT> const &message) override;
     ~BunnyGraphicsComponent() override;
+    static sf::Vector2f getMousePosition() {
+        sf::RenderWindow &windowRef = *GraphicsComponent::s_window;
+
+        sf::Vector2i mouse_pos_ref = sf::Mouse::getPosition(dynamic_cast<sf::Window &>(windowRef));
+        sf::Vector2f mouse_pos = windowRef.mapPixelToCoords(mouse_pos_ref);
+        return mouse_pos;
+    }
+    float getMouseDistance(){
+        sf::Vector2f mouse_pos = BunnyGraphicsComponent::getMousePosition();
+        return sqrtf(powf(mouse_pos.x - position_->x, 2) + powf(mouse_pos.y - position_->y, 2));
+    }
+    const bool &shouldTeleport = shouldTeleport_;
+    const float &teleportationMultiplier = teleportationMultiplier_;
 };
 
 

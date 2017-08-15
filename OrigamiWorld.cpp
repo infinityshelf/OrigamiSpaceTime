@@ -34,8 +34,8 @@ void OrigamiWorld::handleMessage(Message<INT> const &message) {
     if (debug) std::cout << message.description << " " << message.data_ << std::endl;
     if (message.description == "teleported") {
         currentFrame_ = message.data_;
-        Bunny *bunny = new Bunny(BUNNY_STATE_RECORDING);
-        addEntity(bunny);
+        //Bunny *bunny = new Bunny(BUNNY_STATE_RECORDING);
+        //addEntity(bunny);
     }
 
     //std::cout << "entities count: " << entities_.size() << std::endl;

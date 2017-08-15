@@ -27,6 +27,7 @@ public:
         timeFrozen_ = frozen;
     }
     const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    //void setCurrentFrame(uint16_t frame) { currentFrame_ = frame; }
     static OrigamiWorld *instance();
     void update(double elapsed, sf::RenderWindow &window);
     void handleMessage(Message<INT> const &message) override;
