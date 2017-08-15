@@ -9,9 +9,9 @@
 #include "Bunny.hpp"
 #include "OrigamiWorld.hpp"
 
-const int blockSize = 64;
-const int width = blockSize * 56 / 2;
-const int height = blockSize * 32 / 2;
+const unsigned int blockSize = 16;
+const unsigned int width = blockSize * 56 / 2;
+const unsigned int height = blockSize * 32 / 2;
 
 
 int Game::main(int argc, const char *argv[]) {
@@ -21,22 +21,20 @@ int Game::main(int argc, const char *argv[]) {
     }
 
     sf::RenderWindow window(sf::VideoMode(width, height, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
-
-    //sf::RenderTexture texture;
-    //texture.create(width, height, true);
+    window.setSize(sf::Vector2u(width * 5,height * 5));
+    window.setPosition(sf::Vector2i(100,0));
 
     window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(false);
+    window.setVerticalSyncEnabled(true);
     window.setKeyRepeatEnabled(false);
     window.setTitle(windowTitle);
 
     GraphicsComponent::setWindow(&window);
-    //BunnyGraphicsComponent::setRenderTexture(texture);
 
     OrigamiWorld *world = OrigamiWorld::instance();
 
-    for (int i = 0; i < width / blockSize; i++) {
-        for (int j = 0; j < height / blockSize; j++) {
+    for (unsigned int i = 0; i < width / blockSize; i++) {
+        for (unsigned int j = 0; j < height / blockSize; j++) {
             if (i == 0 || j == 0 || i == (width / blockSize) - 1 || j == (height / blockSize) - 1) {
                 world->addCollidable(new sf::IntRect(i * blockSize, j * blockSize, blockSize, blockSize));
             }
@@ -47,7 +45,7 @@ int Game::main(int argc, const char *argv[]) {
             }
         }
     }
-    Bunny *player = new Bunny();
+    Bunny *player = new Bunny(BUNNY_STATE_RECORDING);
     world->addEntity(player);
 #define VARIABLE_TIME_STEP false
 #if VARIABLE_TIME_STEP
