@@ -41,7 +41,7 @@ void BunnyInputComponent::update(double elapsed) {
         if (y_ > maxFallSpeed_) {
             y_ = maxFallSpeed_;
         } else {
-            y_ += (currentFrame % 2 == 0) ? 1 : 0;
+            y_ += 0.5f;
         }
 
     }

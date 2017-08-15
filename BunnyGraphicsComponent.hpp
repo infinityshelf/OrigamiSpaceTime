@@ -17,7 +17,7 @@ extern const std::string kBunnyWalkFilePath;
 
 class BunnyGraphicsComponent: public GraphicsComponent, public MessageHandler<INT> {
 private:
-    const sf::Vector2i *position_;
+    const sf::Vector2f *position_;
     sf::Sprite sprite_;
     Bunny &entity_;
     sf::CircleShape teleportingRadius_;

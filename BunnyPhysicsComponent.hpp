@@ -16,9 +16,9 @@ class BunnyPhysicsComponent: public PhysicsComponent, public MessageHandler<INT>
 private:
     Bunny &entity_;
     //bool active_;
-    const sf::Vector2i *inputVector_;
+    const sf::Vector2f *inputVector_;
 
-    std::vector<sf::Vector2i> positions_;
+    std::vector<sf::Vector2f> positions_;
 
 
     sf::IntRect boundingBox_;
@@ -32,8 +32,8 @@ private:
     int maxFallSpeed_;
 
     void setFlags();
-    sf::Vector2i startPoint_;
-    sf::Vector2i endPoint_;
+    sf::Vector2f startPoint_;
+    sf::Vector2f endPoint_;
     int distanceTraveled_ = 0;
 
     BunnyInputComponent *inputComponent_;
@@ -55,8 +55,8 @@ public:
     ~BunnyPhysicsComponent() override;
 
     const int &distanceTraveled = distanceTraveled_;
-    const sf::Vector2i &startPoint = startPoint_;
-    const sf::Vector2i &endPoint = endPoint_;
+    const sf::Vector2f &startPoint = startPoint_;
+    const sf::Vector2f &endPoint = endPoint_;
 };
 
 

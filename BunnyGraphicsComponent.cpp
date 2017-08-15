@@ -26,7 +26,7 @@ BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(
 
 void BunnyGraphicsComponent::siblingComponentsInitialized() {
     physicsComponent_ = entity_.getComponent<BunnyPhysicsComponent *>();
-    position_ = (physicsComponent_) ? &physicsComponent_->position : new sf::Vector2i(0,0);
+    position_ = (physicsComponent_) ? &physicsComponent_->position : new sf::Vector2f(0,0);
 }
 
 void BunnyGraphicsComponent::update(double elapsed) {
@@ -90,7 +90,7 @@ void BunnyGraphicsComponent::update(double elapsed) {
         && currentFrame <= entity_.deathday) {
         GraphicsComponent::s_window->draw(sprite_);
     } else {
-        std::cout << "no draw 4 u!" << std::endl;
+        if (debug) std::cout << "BunnyInputComponent: " << this << " did not draw." << std::endl;
     }
 }
 

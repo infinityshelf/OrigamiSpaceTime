@@ -16,16 +16,15 @@ class BunnyPhysicsComponent;
 
 class BunnyInputComponent: public InputComponent, public MessageDispatcher<INT> {
 private:
-    const uint16_t &currentFrame = OrigamiWorld::instance()->currentFrame;
     Bunny &entity_;
-    sf::Vector2i inputVector_;
-    int &x_ = inputVector_.x;
-    int &y_ = inputVector_.y;
+    sf::Vector2f inputVector_;
+    float &x_ = inputVector_.x;
+    float &y_ = inputVector_.y;
     const InputStruct &input = Input::inputStruct;
 
-    int runSpeed_;
-    int jumpSpeed_;
-    int maxFallSpeed_;
+    float runSpeed_;
+    float jumpSpeed_;
+    float maxFallSpeed_;
     const bool *grounded_;
     const bool *hittingCeiling_;
     const bool *hitWallLeft_;
@@ -34,9 +33,9 @@ private:
     BunnyPhysicsComponent *physicsComponent_;
     void handleLeftClick();
 public:
-    const sf::Vector2i &inputVector = inputVector_;
-    const int &x = inputVector_.x;
-    const int &y = inputVector_.y;
+    const sf::Vector2f &inputVector = inputVector_;
+    const float &x = x_;
+    const float &y = y_;
 
     explicit BunnyInputComponent(Bunny &bunny);
 

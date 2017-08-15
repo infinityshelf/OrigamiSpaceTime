@@ -28,7 +28,7 @@ BunnyPhysicsComponent::BunnyPhysicsComponent(Bunny &bunny): PhysicsComponent(bun
     hitWallRight_ = hitWallLeft_ = hittingCeiling_ = grounded_ = false;
 
     startPoint_ = position;
-    endPoint_ = sf::Vector2i(0,0);
+    endPoint_ = sf::Vector2f(0,0);
     distanceTraveled_ = 0;
 }
 
@@ -43,7 +43,7 @@ void BunnyPhysicsComponent::update(double elapsed) {
             boundingBox_.left = x - size.x / 2;
             boundingBox_.top = y - size.y / 2;
 
-            sf::Vector2i velocity = (inputVector_) ? *inputVector_ : sf::Vector2i(0,0);
+            sf::Vector2f velocity = (inputVector_) ? *inputVector_ : sf::Vector2f(0,0);
 
             const sf::IntRect *result;
 
@@ -74,7 +74,7 @@ void BunnyPhysicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
-            sf::Vector2i pos = positions_.at(positions_.size() - 1);
+            sf::Vector2f pos = positions_.at(positions_.size() - 1);
             position_ = pos;
             if (pos.y == 0 && pos.x == 0) {
                 assert(false && "Teleporting position should not be 0,0");
