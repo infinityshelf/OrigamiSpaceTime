@@ -86,6 +86,7 @@ void BunnyInputComponent::handleLeftClick() {
                 entity_.setState(BUNNY_STATE_PLAYING);
                 uint16_t lifeSpan = entity_.deathday - entity_.birthday;
                 uint16_t data = entity_.deathday - lifeSpan * graphicsComponent_->teleportationMultiplier;
+                //uint16_t data = entity_.deathday - (lifeSpan * graphicsComponent_->teleportationMultiplier);
                 Message<INT> message(data);
                 message.description = "teleported";
                 dispatchMessage(message);

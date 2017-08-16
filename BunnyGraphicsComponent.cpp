@@ -37,17 +37,7 @@ void BunnyGraphicsComponent::siblingComponentsInitialized() {
 
 void BunnyGraphicsComponent::update(double elapsed) {
     sprite_.setPosition(position_->x, position_->y);
-//
-//    sf::RenderWindow &windowRef = *GraphicsComponent::s_window;
-//
-//    sf::Vector2i mouse_pos_ref = sf::Mouse::getPosition(dynamic_cast<sf::Window &>(windowRef));
-//    sf::Vector2f mouse_pos = windowRef.mapPixelToCoords(mouse_pos_ref);
-//
-//    teleportingRadius_.setPosition(position_->x, position_->y);
-//    teleportingRadius_.setOrigin((teleportingRadius_.getRadius()) - physicsComponent_->size.x / 2, (teleportingRadius_.getRadius()) - physicsComponent_->size.y / 2);
-
-
-
+    
     const uint16_t &currentFrame = OrigamiWorld::instance()->currentFrame;
     switch (currentFrame % 40) {
         case 0: {
@@ -81,23 +71,22 @@ void BunnyGraphicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_PLAYING: {
-            //if (OrigamiWorld::instance()->timeFrozen) {
-            //    sprite_.setPosition(getMousePosition());
-            //}
             sprite_.setColor(sf::Color::Green);
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
             sprite_.setColor(sf::Color(0xFF,0xFF,0xA0,0xFF));
 
-            teleportingRadius_.setPosition(position_->x, position_->y);
+            teleportingRadius_.setPosition(physicsComponent_->endPoint.x, physicsComponent_->endPoint.y);
+            //teleportingRadius_.setPosition(position_->x, position_->y);
             teleportingRadius_.setRadius(getMouseDistance());
             teleportingRadius_.setOrigin(
                     (teleportingRadius_.getRadius()) - physicsComponent_->size.x / 2,
                     (teleportingRadius_.getRadius()) - physicsComponent_->size.y / 2
             );
 
-            maxTeleportRadius_.setPosition(position_->x, position_->y);
+            //maxTeleportRadius_.setPosition(position_->x, position_->y);
+            maxTeleportRadius_.setPosition(physicsComponent_->endPoint.x, physicsComponent_->endPoint.y);
             maxTeleportRadius_.setRadius(physicsComponent_->distanceTraveled);
             maxTeleportRadius_.setOrigin(
                     physicsComponent_->distanceTraveled - physicsComponent_->size.x / 2,
@@ -105,6 +94,9 @@ void BunnyGraphicsComponent::update(double elapsed) {
             );
             shouldTeleport_ = teleportingRadius_.getRadius() <= maxTeleportRadius_.getRadius();
             teleportationMultiplier_ = teleportingRadius_.getRadius() / maxTeleportRadius_.getRadius();
+            if (teleportationMultiplier_ > 1.0f) {
+                teleportationMultiplier_ = 1.0f;
+            }
             sf::RenderStates state = sf::RenderStates();
             state.blendMode = sf::BlendAdd;
             if (getMouseDistance() <= physicsComponent_->distanceTraveled) {
@@ -122,7 +114,8 @@ void BunnyGraphicsComponent::update(double elapsed) {
         && currentFrame <= entity_.deathday) {
         GraphicsComponent::s_window->draw(sprite_);
     } else {
-        if (debug) std::cout << "BunnyInputComponent: " << this << " did not draw." << std::endl;
+        //if (true) std::cout << "BunnyInputComponent: " << this << " did not draw." << std::endl;
+        //GraphicsComponent::s_window->draw(sprite_);
     }
 }
 
@@ -131,5 +124,10 @@ BunnyGraphicsComponent::~BunnyGraphicsComponent() = default;
 void BunnyGraphicsComponent::handleMessage(Message<INT> const &message) {
     std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
 
+}
+
+float BunnyGraphicsComponent::getMouseDistance() {
+    sf::Vector2f mouse_pos = BunnyGraphicsComponent::getMousePosition();
+    return sqrtf(powf(mouse_pos.x - physicsComponent_->endPoint.x, 2) + powf(mouse_pos.y - physicsComponent_->endPoint.y, 2));
 }
 

@@ -41,10 +41,7 @@ public:
         sf::Vector2f mouse_pos = windowRef.mapPixelToCoords(mouse_pos_ref);
         return mouse_pos;
     }
-    float getMouseDistance(){
-        sf::Vector2f mouse_pos = BunnyGraphicsComponent::getMousePosition();
-        return sqrtf(powf(mouse_pos.x - position_->x, 2) + powf(mouse_pos.y - position_->y, 2));
-    }
+    float getMouseDistance();
     const bool &shouldTeleport = shouldTeleport_;
     const float &teleportationMultiplier = teleportationMultiplier_;
 };

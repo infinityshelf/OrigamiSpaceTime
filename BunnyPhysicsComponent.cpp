@@ -83,18 +83,19 @@ void BunnyPhysicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
-            sf::Vector2<uint16_t > fpos = positions_.at(positions_.size() - 1);
-            sf::Vector2f pos = sf::Vector2f(fpos.x, fpos.y);
-            position_ = pos;
-            if (pos.y == 0 && pos.x == 0) {
-                assert(false && "Teleporting position should not be 0,0");
-            }
-            break;
+//            sf::Vector2<uint16_t > fpos = positions_.at(positions_.size() - 1);
+//            sf::Vector2f pos = sf::Vector2f(fpos.x, fpos.y);
+//            position_ = pos;
+//            if (pos.y == 0 && pos.x == 0) {
+//                assert(false && "Teleporting position should not be 0,0");
+//            }
+//            break;
         }
         case BUNNY_STATE_PLAYING: {
             uint16_t currentFrame = OrigamiWorld::instance()->currentFrame;
             if (OrigamiWorld::instance()->timeFrozen) {
-                unsigned int index = positions_.size() * graphicsComponent_->teleportationMultiplier;
+                size_t positionsSize = positions_.size();
+                unsigned int index = positionsSize - (positionsSize * graphicsComponent_->teleportationMultiplier);
                 sf::Vector2<uint16_t > pos = positions_[index];
                 position_ = sf::Vector2f(pos.x, pos.y);
                 if (debug) std::cout << "pos(" << pos.x << "," << pos.y << ")" <<std::endl;
