@@ -13,8 +13,6 @@ const bool debug = false;
 const std::string kBunnyWalk = "BunnyWalk";
 const std::string kBunnyWalkFilePath = "Images/sprPlayerWalk_strip4.png";
 
-float BunnyGraphicsComponent::teleportationMultiplier_ = 1.0f;
-
 BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(bunny), entity_(bunny) {
     TextureManager::instance()->loadTexture(kBunnyWalk, kBunnyWalkFilePath);
     sprite_.setTexture(TextureManager::instance()->getRef(kBunnyWalk));
