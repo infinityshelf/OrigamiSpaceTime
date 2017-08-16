@@ -11,10 +11,8 @@
 
 class OrigamiWorld: public World, public MessageHandler<INT> {
 private:
-    bool timeFrozen_;
     static OrigamiWorld *s_instance;
     uint16_t currentFrame_;
-    uint16_t frames;
     OrigamiWorld();
     ~OrigamiWorld() override {
         for (Entity *entity: entities_) {
@@ -22,10 +20,6 @@ private:
         }
     }
 public:
-    const bool &timeFrozen = timeFrozen_;
-    void setTimeFrozen(bool frozen) {
-        timeFrozen_ = frozen;
-    }
     const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
     //void setCurrentFrame(uint16_t frame) { currentFrame_ = frame; }
     static OrigamiWorld *instance();

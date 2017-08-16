@@ -63,42 +63,9 @@ void BunnyInputComponent::update(double elapsed) {
     if (input.right == false && input.left == false) {
         x_ *= 0.5;
     }
-    // if left mouse button is pressed
-    // and if not teleporting
     if (input.leftMouseButtonPressed) {
-        handleLeftClick();
-    }
-}
 
-void BunnyInputComponent::handleLeftClick() {
-    switch(entity_.state) {
-        case BUNNY_STATE_UNDEFINED: {
-            assert(false && "Bunny State was Undefined");
-            break;
-        }
-        case BUNNY_STATE_RECORDING: {
-            entity_.setState(BUNNY_STATE_TELEPORTING);
-            break;
-        }
-        case BUNNY_STATE_TELEPORTING: {
-            if (graphicsComponent_
-                && graphicsComponent_->shouldTeleport) {
-                entity_.setState(BUNNY_STATE_PLAYING);
-                uint16_t lifeSpan = entity_.deathday - entity_.birthday;
-                uint16_t data = entity_.deathday - lifeSpan * graphicsComponent_->teleportationMultiplier;
-                //uint16_t data = entity_.deathday - (lifeSpan * graphicsComponent_->teleportationMultiplier);
-                Message<INT> message(data);
-                message.description = "teleported";
-                dispatchMessage(message);
-            }
-            break;
-        }
-        case BUNNY_STATE_PLAYING: {
-            // do nothing
-            break;
-        }
     }
-
 }
 
 void BunnyInputComponent::siblingComponentsInitialized() {

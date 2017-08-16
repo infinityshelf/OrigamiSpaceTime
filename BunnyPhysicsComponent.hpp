@@ -20,8 +20,6 @@ private:
     Bunny &entity_;
     const sf::Vector2f *inputVector_;
 
-    std::vector<sf::Vector2<uint16_t> > positions_;
-
 
     sf::IntRect boundingBox_;
     bool grounded_;
@@ -34,9 +32,6 @@ private:
     int maxFallSpeed_;
 
     void setFlags();
-    sf::Vector2f startPoint_;
-    sf::Vector2f endPoint_;
-    float distanceTraveled_ = 0;
 
     BunnyInputComponent *inputComponent_;
     BunnyGraphicsComponent *graphicsComponent_;
@@ -56,10 +51,6 @@ public:
 
     void handleMessage(Message<INT> const &message) override;
     ~BunnyPhysicsComponent() override;
-
-    const float &distanceTraveled = distanceTraveled_;
-    const sf::Vector2f &startPoint = startPoint_;
-    const sf::Vector2f &endPoint = endPoint_;
 };
 
 

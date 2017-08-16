@@ -46,7 +46,7 @@ int Game::main(int argc, const char *argv[]) {
             }
         }
     }
-    Bunny *player = new Bunny(BUNNY_STATE_RECORDING);
+    Bunny *player = new Bunny();
     world->addEntity(player);
 #define VARIABLE_TIME_STEP false
 #if VARIABLE_TIME_STEP

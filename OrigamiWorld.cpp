@@ -6,21 +6,21 @@
 #include "Bunny.hpp"
 
 const bool debug = false;
+const bool logTime = false;
 
 OrigamiWorld *OrigamiWorld::s_instance = nullptr;
 //uint16_t OrigamiWorld::currentFrame_ = 0;
 
 void OrigamiWorld::update(double elapsed, sf::RenderWindow &window) {
-    if (currentFrame % 60 == 0) {
+    if (currentFrame % 60 == 0 && logTime) {
         std::cout << std::setfill('0') << std::setw(2) << currentFrame / 60 / 60 << ":"<< std::setfill('0') << std::setw(2) << currentFrame / 60 << std::endl;
     }
     World::update(elapsed, window);
-    if (timeFrozen_ == false) currentFrame_++;
+    currentFrame_++;
 }
 
 OrigamiWorld::OrigamiWorld()  {
     currentFrame_ = 0;
-    frames = 0;
 }
 
 OrigamiWorld *OrigamiWorld::instance() {
