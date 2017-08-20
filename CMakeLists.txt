@@ -17,7 +17,7 @@ set(SOURCE_FILES
         BunnyPhysicsComponent.cpp
         BunnyPhysicsComponent.hpp
         OrigamiWorld.cpp
-        OrigamiWorld.hpp)
+        OrigamiWorld.hpp BunnyComponent.cpp BunnyComponent.hpp)
 
 add_executable(OrigamiSpaceTime ${SOURCE_FILES})
 add_subdirectory(SFML-Engine)

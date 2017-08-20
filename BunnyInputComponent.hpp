@@ -9,20 +9,27 @@
 #include "SFML-Engine/Input.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "Bunny.hpp"
-//#include "BunnyPhysicsComponent.hpp"
-//#include "BunnyGraphicsComponent.hpp"
 #include "OrigamiWorld.hpp"
+#include "BunnyComponent.hpp"
 
 class BunnyPhysicsComponent;
-class BunnyGraphicsComponent;
 
-class BunnyInputComponent: public InputComponent, public MessageDispatcher<INT> {
+class BunnyInputComponent: public InputComponent,
+                           //public MessageHandler<INT>,
+                           public MessageDispatcher<INT>,
+                           public MessageDispatcher<BOOL>,
+                           public BunnyComponent {
 private:
     Bunny &entity_;
     sf::Vector2f inputVector_;
     float &x_ = inputVector_.x;
     float &y_ = inputVector_.y;
-    const InputStruct &input = Input::inputStruct;
+    InputStruct input_;
+
+    //
+    // for time travel recording
+    //
+    std::vector<InputStruct> recordedInputs_;
 
     float runSpeed_;
     float jumpSpeed_;
@@ -33,12 +40,11 @@ private:
     const bool *hitWallRight_;
 
     BunnyPhysicsComponent *physicsComponent_;
-    BunnyGraphicsComponent *graphicsComponent_;
-    void handleLeftClick();
 public:
     const sf::Vector2f &inputVector = inputVector_;
     const float &x = x_;
     const float &y = y_;
+    const InputStruct &input = input_;
 
     explicit BunnyInputComponent(Bunny &bunny);
 
@@ -46,6 +52,9 @@ public:
     void siblingComponentsInitialized() override;
 
     ~BunnyInputComponent() override;
+    void record() override ;
+    void play() override ;
+    //void handleMessage(Message<INT> const &message)d;
 };
 
 

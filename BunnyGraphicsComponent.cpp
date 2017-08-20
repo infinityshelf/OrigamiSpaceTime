@@ -1,12 +1,11 @@
 //
 // Created by Estevan Hernandez on 8/4/17.
 //
-
-#include "BunnyGraphicsComponent.hpp"
 #include <SFML/System.hpp>
-#include "SFML-Engine/TextureManager.hpp"
 #include "OrigamiWorld.hpp"
-#include "Bunny.hpp"
+#include "SFML-Engine/TextureManager.hpp"
+#include "BunnyGraphicsComponent.hpp"
+//#include "Bunny.hpp"
 
 const bool debug = false;
 
@@ -28,8 +27,8 @@ void BunnyGraphicsComponent::siblingComponentsInitialized() {
 void BunnyGraphicsComponent::update(double elapsed) {
     sprite_.setPosition(position_->x, position_->y);
     
-    const uint16_t &currentFrame = OrigamiWorld::instance()->currentFrame;
-    switch (currentFrame % 40) {
+    const uint16_t &frame = OrigamiWorld::instance()->currentFrame;
+    switch (frame % 40) {
         case 0: {
             sprite_.setTextureRect(sf::IntRect(0,0,16,16));
             break;
@@ -51,13 +50,54 @@ void BunnyGraphicsComponent::update(double elapsed) {
 
     }
 
+    switch(entity_.state) {
+        case BUNNY_STATE_UNDEFINED: {
+            break;
+        }
+        case BUNNY_STATE_RECORDING: {
+            sprite_.setColor(sf::Color::Red);
+            break;
+        }
+        case BUNNY_STATE_TELEPORTING: {
+            break;
+        }
+        case BUNNY_STATE_PLAYING: {
+            break;
+        }
+    }
+
     if (debug) std::cout << "BunnyGraphicsComponent::update elapsed: " <<  elapsed << std::endl;
-    GraphicsComponent::s_window->draw(sprite_);
+    //uint16_t index = frame - entity_.birth;
+    if (frame >= entity_.birth
+        && frame <= entity_.death) { // death is 0xFFFF.
+        GraphicsComponent::s_window->draw(sprite_);
+    } else {
+        if (debug) std::cout << "out of range, won't draw" << std::endl;
+    }
+
 }
 
 BunnyGraphicsComponent::~BunnyGraphicsComponent() = default;
 
 void BunnyGraphicsComponent::handleMessage(Message<INT> const &message) {
     std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
+
+}
+
+sf::Vector2i BunnyGraphicsComponent::getMousePosition() {
+    sf::Vector2i mouse_pos = sf::Mouse::getPosition(*s_window);
+    //unsigned int x = s_window->getSize().x;
+    //unsigned int y = s_window->getSize().y;
+
+    //mouse_pos.x /= 4;
+    //mouse_pos.y /= 4;
+    return mouse_pos;
+}
+
+void BunnyGraphicsComponent::play() {
+
+}
+
+void BunnyGraphicsComponent::record() {
 
 }

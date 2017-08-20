@@ -8,6 +8,7 @@
 #include "SFML-Engine/PhysicsComponent.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "SFML-Engine/GraphicsComponent.hpp"
+#include "BunnyComponent.hpp"
 #include "Bunny.hpp"
 #include "BunnyInputComponent.hpp"
 #include "BunnyGraphicsComponent.hpp"
@@ -15,7 +16,10 @@
 class BunnyGraphicsComponent;
 class BunnyInputComponent;
 
-class BunnyPhysicsComponent: public PhysicsComponent, public MessageHandler<INT> {
+class BunnyPhysicsComponent: public PhysicsComponent,
+                             public MessageHandler<INT>,
+                             public MessageHandler<BOOL>,
+                             public BunnyComponent {
 private:
     Bunny &entity_;
     const sf::Vector2f *inputVector_;
@@ -35,6 +39,11 @@ private:
 
     BunnyInputComponent *inputComponent_;
     BunnyGraphicsComponent *graphicsComponent_;
+
+    std::vector<sf::Vector2<uint16_t>> recordedPositions_;
+
+    //using MessageHandler<INT>::handleMessage;
+    //using MessageHandler<BOOL>::handleMessage;
 public:
     //void setActive(bool active) { active_ = active; }
     const bool &grounded = grounded_;
@@ -49,8 +58,14 @@ public:
     const int &jumpSpeed = jumpSpeed_;
     const int &maxFallSpeed = maxFallSpeed_;
 
+    void handleMessage(Message<BOOL> const &message) override;
     void handleMessage(Message<INT> const &message) override;
     ~BunnyPhysicsComponent() override;
+
+    void record() override;
+    void play() override;
+
+    unsigned long getPositionsSize();
 };
 
 

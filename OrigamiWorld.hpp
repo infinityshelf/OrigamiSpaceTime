@@ -20,7 +20,8 @@ private:
         }
     }
 public:
-    const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    //const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    uint16_t &currentFrame = OrigamiWorld::currentFrame_;
     //void setCurrentFrame(uint16_t frame) { currentFrame_ = frame; }
     static OrigamiWorld *instance();
     void update(double elapsed, sf::RenderWindow &window);

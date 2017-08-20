@@ -10,8 +10,21 @@
 #include "OrigamiWorld.hpp"
 
 
-Bunny::Bunny() {
+//Bunny::Bunny() {
+//    state_ = BUNNY_STATE_RECORDING;
+//    newState_ = BUNNY_STATE_RECORDING;
+//    birth_ = 0;
+//    death_ = 0xFFFF;
+//    initializeComponents();
+//}
+
+Bunny::Bunny(BunnyState state, uint16_t birth, uint16_t death) {
+    state_ = state;
+    newState_ = state;
+    birth_ = birth;
+    death_ = death;
     initializeComponents();
+
 }
 
 void Bunny::initializeComponents() {
@@ -27,10 +40,16 @@ void Bunny::update(double elapsed) {
     for (Component *component: components) {
         component->update(elapsed);
     }
+    state_ = newState_;
 }
 
 Bunny::~Bunny() {
     for (Component *component: components) {
         delete component;
     }
+}
+
+void Bunny::setState(BunnyState state) {
+    newState_ = state;
+
 }
