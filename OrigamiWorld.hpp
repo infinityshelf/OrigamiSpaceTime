@@ -9,8 +9,11 @@
 #include <iomanip>
 #include "SFML-Engine/ComponentMessaging.hpp"
 
-class OrigamiWorld: public World, public MessageHandler<INT> {
+class OrigamiWorld: public World,
+                    public MessageHandler<INT>,
+                    public MessageHandler<BOOL> {
 private:
+    bool teleporting_ = false;
     static OrigamiWorld *s_instance;
     uint16_t currentFrame_;
     OrigamiWorld();
@@ -21,11 +24,13 @@ private:
     }
 public:
     //const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    const bool & teleporting = teleporting_;
     uint16_t &currentFrame = OrigamiWorld::currentFrame_;
     //void setCurrentFrame(uint16_t frame) { currentFrame_ = frame; }
     static OrigamiWorld *instance();
     void update(double elapsed, sf::RenderWindow &window);
     void handleMessage(Message<INT> const &message) override;
+    void handleMessage(Message<BOOL> const &message) override;
 };
 
 

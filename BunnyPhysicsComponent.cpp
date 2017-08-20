@@ -46,8 +46,8 @@ void BunnyPhysicsComponent::update(double elapsed) {
             //break;
         }
         case BUNNY_STATE_PLAYING: {
-            play(); /* For now, just play back recorded positions */
-            return;
+            //play(); /* For now, just play back recorded positions */
+            //return;
             break;
         }
     }

@@ -8,7 +8,8 @@
 const bool debug = false;
 
 BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
-    //addHandler(OrigamiWorld::instance());
+    static_cast<MessageDispatcher<BOOL> *>(this)->addHandler(static_cast<MessageHandler<BOOL> *>(OrigamiWorld::instance()));
+    static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(OrigamiWorld::instance()));
 }
 
 void BunnyInputComponent::update(double elapsed) {
@@ -22,10 +23,13 @@ void BunnyInputComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_PLAYING: {
-            //InputStruct blank;
-            //input_ = blank;
-            //play();
-            return;
+            if (OrigamiWorld::instance()->teleporting == false) {
+                //InputStruct blank;
+                //input_ = blank;
+                play();
+            } else {
+                return;
+            }
             break;
         }
         case BUNNY_STATE_TELEPORTING: {

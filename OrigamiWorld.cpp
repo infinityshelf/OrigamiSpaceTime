@@ -16,7 +16,7 @@ void OrigamiWorld::update(double elapsed, sf::RenderWindow &window) {
         std::cout << std::setfill('0') << std::setw(2) << currentFrame / 60 / 60 << ":"<< std::setfill('0') << std::setw(2) << currentFrame / 60 << std::endl;
     }
     World::update(elapsed, window);
-    currentFrame_++;
+    if (teleporting_ == false) currentFrame_++;
 }
 
 OrigamiWorld::OrigamiWorld()  {
@@ -34,8 +34,18 @@ void OrigamiWorld::handleMessage(Message<INT> const &message) {
     if (debug) std::cout << message.description << " " << message.data_ << std::endl;
     if (message.description == "teleported") {
         currentFrame_ = message.data_;
+        teleporting_ = false;
         //Bunny *bunny = new Bunny(BUNNY_STATE_RECORDING);
         //addEntity(bunny);
+    }
+
+    //std::cout << "entities count: " << entities_.size() << std::endl;
+}
+
+void OrigamiWorld::handleMessage(Message<BOOL> const &message) {
+    if (debug) std::cout << message.description << " " << message.data_ << std::endl;
+    if (message.description == "teleport") {
+        teleporting_ = message.data_;
     }
 
     //std::cout << "entities count: " << entities_.size() << std::endl;
