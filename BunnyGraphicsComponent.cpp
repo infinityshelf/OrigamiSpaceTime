@@ -65,25 +65,6 @@ void BunnyGraphicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
-//            maxTeleportCircle.setPosition(physicsComponent_->getEndPosition());
-//            maxTeleportCircle.setRadius(100);
-//            maxTeleportCircle.setOrigin(100,100);
-//
-//            teleportCircle.setPosition(physicsComponent_->getEndPosition());
-//            teleportCircle.setRadius(50);
-//            teleportCircle.setOrigin(50,50);
-//
-//            GraphicsComponent::s_window->draw(maxTeleportCircle);
-//            GraphicsComponent::s_window->draw(teleportCircle);
-//
-//
-//            sprite_.setPosition(physicsComponent_->getEndPosition().x, physicsComponent_->getEndPosition().y);
-//            sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
-//            GraphicsComponent::s_window->draw(sprite_);
-//
-//            sprite_.setPosition(getMousePosition().x / 4, getMousePosition().y / 4);
-//            sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
-//            GraphicsComponent::s_window->draw(sprite_);
             break;
         }
         case BUNNY_STATE_PLAYING: {
@@ -105,19 +86,24 @@ void BunnyGraphicsComponent::update(double elapsed) {
     }
 
     if (entity_.state == BUNNY_STATE_TELEPORTING) {
+
+        float travelDistance = physicsComponent_->getTraveledDistance();
+        float mouseDistance = getMouseDistance(physicsComponent_->getEndPosition());
+
+        mouseDistance = (mouseDistance > travelDistance) ? travelDistance : mouseDistance;
+
         maxTeleportCircle.setPosition(physicsComponent_->getEndPosition());
-        maxTeleportCircle.setRadius(physicsComponent_->getTraveledDistance());
-        maxTeleportCircle.setOrigin(physicsComponent_->getTraveledDistance(),
-                                    physicsComponent_->getTraveledDistance());
+        maxTeleportCircle.setRadius(travelDistance);
+        maxTeleportCircle.setOrigin(travelDistance,
+                                    travelDistance);
 
         teleportCircle.setPosition(physicsComponent_->getEndPosition());
-        teleportCircle.setRadius(getMouseDistance(physicsComponent_->getEndPosition()));
-        teleportCircle.setOrigin(getMouseDistance(physicsComponent_->getEndPosition()),
-                                 getMouseDistance(physicsComponent_->getEndPosition()));
+        teleportCircle.setRadius(mouseDistance);
+        teleportCircle.setOrigin(mouseDistance,
+                                 mouseDistance);
 
         GraphicsComponent::s_window->draw(maxTeleportCircle);
         GraphicsComponent::s_window->draw(teleportCircle);
-
 
         sprite_.setPosition(physicsComponent_->getEndPosition().x, physicsComponent_->getEndPosition().y);
         sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));

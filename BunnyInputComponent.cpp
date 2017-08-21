@@ -54,7 +54,7 @@ void BunnyInputComponent::update(double elapsed) {
                 float multiplier = mouseDistance / traveledDistance;
                 multiplier = (multiplier > 1.f) ? 1.f : multiplier;
 
-                std::cout << "multiplier: " << multiplier << std::endl;
+                if (debug) std::cout << "multiplier: " << multiplier << std::endl;
                 uint16_t lifeSpan = entity_.death - entity_.birth;
 
                 uint16_t frame = entity_.death - lifeSpan * multiplier;
