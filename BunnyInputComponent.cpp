@@ -5,11 +5,12 @@
 #include "BunnyInputComponent.hpp"
 #include "BunnyGraphicsComponent.hpp"
 #include <cassert>
+#include <cmath>
 const bool debug = false;
 
 BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
-    static_cast<MessageDispatcher<BOOL> *>(this)->addHandler(static_cast<MessageHandler<BOOL> *>(OrigamiWorld::instance()));
-    static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(OrigamiWorld::instance()));
+    static_cast<MessageDispatcher<BOOL> *>(this)->addHandler(static_cast<MessageHandler<BOOL> *>(GameWorld::instance()));
+    static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(GameWorld::instance()));
 }
 
 void BunnyInputComponent::update(double elapsed) {
@@ -23,7 +24,7 @@ void BunnyInputComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_PLAYING: {
-            if (OrigamiWorld::instance()->teleporting == false) {
+            if (GameWorld::instance()->teleporting == false) {
                 //InputStruct blank;
                 //input_ = blank;
                 play();
@@ -34,12 +35,34 @@ void BunnyInputComponent::update(double elapsed) {
         }
         case BUNNY_STATE_TELEPORTING: {
             InputStruct blank;
+            // when teleporting, we want to ignore pretty much all inputs except for LMB released
             input_ = blank;
             input_.leftMouseButtonReleased = Input::inputStruct.leftMouseButtonReleased;
-            int mouse_x = BunnyGraphicsComponent::getMousePosition().x / 4;
-            mouse_x = (mouse_x < 0) ? 0 : mouse_x;
-            uint16_t mouse_x16 = static_cast<uint16_t>(mouse_x);
-            OrigamiWorld::instance()->currentFrame = static_cast<uint16_t >(mouse_x16);
+            // for now, use the mouse_x position as a frame
+
+            //int mouse_x = mousePos.x;
+
+            //mouse_x = (mouse_x < 0) ? 0 : mouse_x;
+            //uint16_t mouse_x16 = static_cast<uint16_t>(mouse_x);
+            if (physicsComponent_) {
+
+                sf::Vector2f posF = physicsComponent_->getEndPosition();
+
+                float mouseDistance = BunnyGraphicsComponent::getMouseDistance(posF);
+                float traveledDistance = physicsComponent_->getTraveledDistance();
+
+                float multiplier = mouseDistance / traveledDistance;
+                multiplier = (multiplier > 1.f) ? 1.f : multiplier;
+
+                std::cout << "multiplier: " << multiplier << std::endl;
+                uint16_t lifeSpan = entity_.death - entity_.birth;
+
+                uint16_t frame = entity_.death - lifeSpan * multiplier;
+
+                GameWorld::instance()->currentFrame = entity_.birth + static_cast<uint16_t >(frame);
+
+            }
+
             break;
             //return;
         }
@@ -96,21 +119,27 @@ void BunnyInputComponent::update(double elapsed) {
         x_ *= 0.5;
     }
 
+    // only want to allow a teleport if the player is recording (player controlled)
     if (input.leftMouseButtonPressed
         && entity_.state == BUNNY_STATE_RECORDING) {
 
+        //set state to teleporting
         entity_.setState(BUNNY_STATE_TELEPORTING);
+        // data = false would be the teleport was cancelled.
         bool data = true;
-        entity_.death = OrigamiWorld::instance()->currentFrame;
+        // set the death to teh current frame, if the teleportation gets cancelled, it would be 0xFFFF again.
+        entity_.death = GameWorld::instance()->currentFrame;
         Message<BOOL> teleportMessage(data);
         teleportMessage.description = "teleport";
+        // dispatch message.
         static_cast<MessageDispatcher<BOOL> *>(this)->dispatchMessage(teleportMessage);
 
     }
     if (input.leftMouseButtonReleased
         && entity_.state == BUNNY_STATE_TELEPORTING) {
 
-        uint16_t frame = OrigamiWorld::instance()->currentFrame;
+        // only teleport on LMB released if the player is teleporting.
+        uint16_t frame = GameWorld::instance()->currentFrame;
         entity_.setState(BUNNY_STATE_PLAYING);
         Message<INT> teleportedMessage(frame);
         teleportedMessage.description = "teleported";
@@ -135,7 +164,7 @@ void BunnyInputComponent::siblingComponentsInitialized() {
 
 void BunnyInputComponent::play() {
 
-    uint16_t frame = OrigamiWorld::instance()->currentFrame;
+    uint16_t frame = GameWorld::instance()->currentFrame;
     uint16_t index = 0;
     index = frame - entity_.birth;
     if (index < recordedInputs_.size()) {
@@ -156,7 +185,6 @@ void BunnyInputComponent::play() {
 void BunnyInputComponent::record() {
     recordedInputs_.push_back(input);
 }
-
 
 
 BunnyInputComponent::~BunnyInputComponent() = default;

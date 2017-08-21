@@ -2,7 +2,7 @@
 // Created by Estevan Hernandez on 8/4/17.
 //
 #include <SFML/System.hpp>
-#include "OrigamiWorld.hpp"
+#include "GameWorld.hpp"
 #include "SFML-Engine/TextureManager.hpp"
 #include "BunnyGraphicsComponent.hpp"
 //#include "Bunny.hpp"
@@ -17,6 +17,12 @@ BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(
     sprite_.setTexture(TextureManager::instance()->getRef(kBunnyWalk));
     sprite_.setTextureRect(sf::IntRect(16,0,16,16));
 
+    teleportCircle.setPointCount(100);
+    maxTeleportCircle.setPointCount(100);
+
+    teleportCircle.setFillColor(sf::Color(0xFF,0xFF,0xFF,0xFF/10));
+    maxTeleportCircle.setFillColor(sf::Color(0xFF,0xFF,0xFF,0xFF/10));
+
 }
 
 void BunnyGraphicsComponent::siblingComponentsInitialized() {
@@ -27,7 +33,7 @@ void BunnyGraphicsComponent::siblingComponentsInitialized() {
 void BunnyGraphicsComponent::update(double elapsed) {
     sprite_.setPosition(position_->x, position_->y);
     
-    const uint16_t &frame = OrigamiWorld::instance()->currentFrame;
+    const uint16_t &frame = GameWorld::instance()->currentFrame;
     switch (frame % 40) {
         case 0: {
             sprite_.setTextureRect(sf::IntRect(0,0,16,16));
@@ -55,13 +61,33 @@ void BunnyGraphicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_RECORDING: {
-            sprite_.setColor(sf::Color::Red);
+            sprite_.setColor(sf::Color::White);
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
+//            maxTeleportCircle.setPosition(physicsComponent_->getEndPosition());
+//            maxTeleportCircle.setRadius(100);
+//            maxTeleportCircle.setOrigin(100,100);
+//
+//            teleportCircle.setPosition(physicsComponent_->getEndPosition());
+//            teleportCircle.setRadius(50);
+//            teleportCircle.setOrigin(50,50);
+//
+//            GraphicsComponent::s_window->draw(maxTeleportCircle);
+//            GraphicsComponent::s_window->draw(teleportCircle);
+//
+//
+//            sprite_.setPosition(physicsComponent_->getEndPosition().x, physicsComponent_->getEndPosition().y);
+//            sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
+//            GraphicsComponent::s_window->draw(sprite_);
+//
+//            sprite_.setPosition(getMousePosition().x / 4, getMousePosition().y / 4);
+//            sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
+//            GraphicsComponent::s_window->draw(sprite_);
             break;
         }
         case BUNNY_STATE_PLAYING: {
+            sprite_.setColor(sf::Color(0x80,0xFF,0x80,0xFF));
             break;
         }
     }
@@ -70,9 +96,36 @@ void BunnyGraphicsComponent::update(double elapsed) {
     //uint16_t index = frame - entity_.birth;
     if (frame >= entity_.birth
         && frame <= entity_.death) { // death is 0xFFFF.
+        sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF));
         GraphicsComponent::s_window->draw(sprite_);
+
+
     } else {
         if (debug) std::cout << "out of range, won't draw" << std::endl;
+    }
+
+    if (entity_.state == BUNNY_STATE_TELEPORTING) {
+        maxTeleportCircle.setPosition(physicsComponent_->getEndPosition());
+        maxTeleportCircle.setRadius(physicsComponent_->getTraveledDistance());
+        maxTeleportCircle.setOrigin(physicsComponent_->getTraveledDistance(),
+                                    physicsComponent_->getTraveledDistance());
+
+        teleportCircle.setPosition(physicsComponent_->getEndPosition());
+        teleportCircle.setRadius(getMouseDistance(physicsComponent_->getEndPosition()));
+        teleportCircle.setOrigin(getMouseDistance(physicsComponent_->getEndPosition()),
+                                 getMouseDistance(physicsComponent_->getEndPosition()));
+
+        GraphicsComponent::s_window->draw(maxTeleportCircle);
+        GraphicsComponent::s_window->draw(teleportCircle);
+
+
+        sprite_.setPosition(physicsComponent_->getEndPosition().x, physicsComponent_->getEndPosition().y);
+        sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
+        GraphicsComponent::s_window->draw(sprite_);
+
+        sprite_.setPosition(getMousePosition().x / 4, getMousePosition().y / 4);
+        sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
+        GraphicsComponent::s_window->draw(sprite_);
     }
 
 }
@@ -100,4 +153,9 @@ void BunnyGraphicsComponent::play() {
 
 void BunnyGraphicsComponent::record() {
 
+}
+
+float BunnyGraphicsComponent::getMouseDistance(sf::Vector2f position) {
+    sf::Vector2i mousePos = getMousePosition();
+    return sqrtf(powf(position.x - mousePos.x / 4, 2) + powf(position.y - mousePos.y / 4, 2));
 }

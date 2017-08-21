@@ -7,7 +7,7 @@
 #include "BunnyInputComponent.hpp"
 #include "BunnyPhysicsComponent.hpp"
 #include "BunnyGraphicsComponent.hpp"
-#include "OrigamiWorld.hpp"
+#include "GameWorld.hpp"
 
 
 //Bunny::Bunny() {

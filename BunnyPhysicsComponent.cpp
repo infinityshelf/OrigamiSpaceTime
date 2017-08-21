@@ -3,14 +3,14 @@
 //
 
 #include "Bunny.hpp"
-#include "OrigamiWorld.hpp"
+#include "GameWorld.hpp"
 #include "BunnyPhysicsComponent.hpp"
 #include "BunnyGraphicsComponent.hpp"
 
 bool debug = false;
 
 BunnyPhysicsComponent::BunnyPhysicsComponent(Bunny &bunny): PhysicsComponent(bunny), entity_(bunny) {
-    world_ = OrigamiWorld::instance();
+    world_ = GameWorld::instance();
     x_ = 32;
     y_ = 32 * 5;
 
@@ -103,7 +103,7 @@ void BunnyPhysicsComponent::setFlags() {
 }
 
 void BunnyPhysicsComponent::handleMessage(Message<BOOL> const &message) {
-    if (true) std::cout << message.data_ << std::endl;
+    if (debug) std::cout << message.data_ << std::endl;
     if (message.description == "teleport") {
         if (message.data_ == true) {
             // teleport started
@@ -151,13 +151,13 @@ void BunnyPhysicsComponent::handleMessage(Message<INT> const &message) {
         Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
         sf::Vector2i mousePos = BunnyGraphicsComponent::getMousePosition();
         newBunny->getComponent<BunnyPhysicsComponent *>()->position_ = sf::Vector2f(mousePos.x / 4, mousePos.y / 4);
-        OrigamiWorld::instance()->addEntity(newBunny);
+        GameWorld::instance()->addEntity(newBunny);
     }
 }
 
 void BunnyPhysicsComponent::play() {
     // uses input for playback
-    uint16_t frame = OrigamiWorld::instance()->currentFrame;
+    uint16_t frame = GameWorld::instance()->currentFrame;
     uint16_t index = frame - entity_.birth;
 
     if (debug) std::cout << "frame: " << frame << std::endl;
@@ -187,6 +187,33 @@ void BunnyPhysicsComponent::record() {
 
 unsigned long BunnyPhysicsComponent::getPositionsSize() {
     return recordedPositions_.size();
+}
+
+float BunnyPhysicsComponent::getTraveledDistance() {
+
+
+    sf::Vector2f start = getStartPosition();
+    sf::Vector2f end = getEndPosition();
+
+    float distance = sqrtf(powf(start.x - end.x, 2) + powf(start.y - end.y, 2));
+
+    return distance;
+
+
+
+    return 0;
+}
+
+sf::Vector2f BunnyPhysicsComponent::getEndPosition() {
+    sf::Vector2<uint16_t > end16 = recordedPositions_[recordedPositions_.size() - 1];
+    sf::Vector2f end = sf::Vector2f(end16.x, end16.y);
+    return end;
+}
+
+sf::Vector2f BunnyPhysicsComponent::getStartPosition() {
+    sf::Vector2<uint16_t > start16 = recordedPositions_[0];
+    sf::Vector2f start = sf::Vector2f(start16.x, start16.y);
+    return start;
 }
 
 BunnyPhysicsComponent::~BunnyPhysicsComponent() = default;

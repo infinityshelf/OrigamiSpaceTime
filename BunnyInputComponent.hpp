@@ -9,7 +9,7 @@
 #include "SFML-Engine/Input.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "Bunny.hpp"
-#include "OrigamiWorld.hpp"
+#include "GameWorld.hpp"
 #include "BunnyComponent.hpp"
 
 class BunnyPhysicsComponent;

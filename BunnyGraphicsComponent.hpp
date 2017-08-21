@@ -24,6 +24,9 @@ private:
     sf::Sprite sprite_;
     Bunny &entity_;
     BunnyPhysicsComponent *physicsComponent_;
+
+    sf::CircleShape maxTeleportCircle;
+    sf::CircleShape teleportCircle;
 public:
     explicit BunnyGraphicsComponent(Bunny &bunny);
     void update(double elapsed) override;
@@ -32,6 +35,7 @@ public:
     ~BunnyGraphicsComponent() override;
     //sf::RenderWindow &windowRef() { return *s_window; }
     static sf::Vector2i getMousePosition();
+    static float getMouseDistance(sf::Vector2f position);
     void record() override;
     void play() override;
 };

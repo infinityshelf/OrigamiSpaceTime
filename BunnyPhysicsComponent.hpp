@@ -66,6 +66,10 @@ public:
     void play() override;
 
     unsigned long getPositionsSize();
+    float getTraveledDistance();
+
+    sf::Vector2f getStartPosition();
+    sf::Vector2f getEndPosition();
 };
 
 

@@ -9,25 +9,25 @@
 #include <iomanip>
 #include "SFML-Engine/ComponentMessaging.hpp"
 
-class OrigamiWorld: public World,
+class GameWorld: public World,
                     public MessageHandler<INT>,
                     public MessageHandler<BOOL> {
 private:
     bool teleporting_ = false;
-    static OrigamiWorld *s_instance;
+    static GameWorld *s_instance;
     uint16_t currentFrame_;
-    OrigamiWorld();
-    ~OrigamiWorld() override {
+    GameWorld();
+    ~GameWorld() override {
         for (Entity *entity: entities_) {
             delete entity;
         }
     }
 public:
-    //const uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    //const uint16_t &currentFrame = GameWorld::currentFrame_;
     const bool & teleporting = teleporting_;
-    uint16_t &currentFrame = OrigamiWorld::currentFrame_;
+    uint16_t &currentFrame = GameWorld::currentFrame_;
     //void setCurrentFrame(uint16_t frame) { currentFrame_ = frame; }
-    static OrigamiWorld *instance();
+    static GameWorld *instance();
     void update(double elapsed, sf::RenderWindow &window);
     void handleMessage(Message<INT> const &message) override;
     void handleMessage(Message<BOOL> const &message) override;

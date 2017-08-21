@@ -3,10 +3,10 @@
 //
 
 #include <iostream>
-#include "Game.hpp"
+#include "mainGame.hpp"
 
 int main(int argc, char const *argv[]) {
     std::cout << "Hello Origami Space Time!" << std::endl;
-    Game::main(argc, argv);
+    mainGame::main(argc, argv);
     return 0;
 }

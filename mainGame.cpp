@@ -2,12 +2,12 @@
 // Created by Estevan Hernandez on 8/4/17.
 //
 
-#include "Game.hpp"
+#include "mainGame.hpp"
 #include <SFML/Window.hpp>
 #include "SFML-Engine/GraphicsComponent.hpp"
 #include "SFML-Engine/Input.hpp"
 #include "Bunny.hpp"
-#include "OrigamiWorld.hpp"
+#include "GameWorld.hpp"
 #include "BunnyPhysicsComponent.hpp"
 
 const unsigned int blockSize = 16;
@@ -15,7 +15,7 @@ const unsigned int width = blockSize * 56 / 2;
 const unsigned int height = blockSize * 32 / 2;
 
 
-int Game::main(int argc, const char *argv[]) {
+int mainGame::main(int argc, const char *argv[]) {
     std::string windowTitle("Origami Space Time");
     if (argc > 1) {
         windowTitle = std::string(argv[1]);
@@ -32,7 +32,7 @@ int Game::main(int argc, const char *argv[]) {
 
     GraphicsComponent::setWindow(&window);
 
-    OrigamiWorld *world = OrigamiWorld::instance();
+    GameWorld *world = GameWorld::instance();
 
     for (unsigned int i = 0; i < width / blockSize; i++) {
         for (unsigned int j = 0; j < height / blockSize; j++) {

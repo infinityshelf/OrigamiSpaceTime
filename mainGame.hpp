@@ -10,19 +10,19 @@
 extern const int screenWidth;
 extern const int screenHeight;
 
-class Game {
+class mainGame {
 public:
 
-    static Game *instance() {
+    static mainGame *instance() {
         if (s_instance == nullptr) {
-            s_instance = new Game;
+            s_instance = new mainGame;
         }
         return s_instance;
     }
     static int main(int argc, const char *argv[]);
 private:
-    static Game *s_instance;
-    Game() {
+    static mainGame *s_instance;
+    mainGame() {
 
     }
 };
