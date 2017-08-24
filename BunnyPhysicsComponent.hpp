@@ -17,8 +17,8 @@ class BunnyGraphicsComponent;
 class BunnyInputComponent;
 
 class BunnyPhysicsComponent: public PhysicsComponent,
-                             public MessageHandler<INT>,
-                             public MessageHandler<BOOL>,
+                             //public MessageHandler<INT>,
+                             //public MessageHandler<BOOL>,
                              public BunnyComponent {
 private:
     Bunny &entity_;
@@ -58,12 +58,16 @@ public:
     const int &jumpSpeed = jumpSpeed_;
     const int &maxFallSpeed = maxFallSpeed_;
 
-    void handleMessage(Message<BOOL> const &message) override;
-    void handleMessage(Message<INT> const &message) override;
+    //void handleMessage(Message<BOOL> const &message) override;
+    //void handleMessage(Message<INT> const &message) override;
     ~BunnyPhysicsComponent() override;
 
-    void record() override;
-    void play() override;
+    void recording() override;
+    void playing() override;
+    void controlUsingInput();
+    void controlUsingTime();
+    void scrubbing() override;
+    void teleporting() override;
 
     unsigned long getPositionsSize();
     float getTraveledDistance();

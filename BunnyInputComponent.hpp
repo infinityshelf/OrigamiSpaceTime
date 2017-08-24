@@ -9,7 +9,7 @@
 #include "SFML-Engine/Input.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
 #include "Bunny.hpp"
-#include "GameWorld.hpp"
+#include "World.hpp"
 #include "BunnyComponent.hpp"
 
 class BunnyPhysicsComponent;
@@ -52,8 +52,11 @@ public:
     void siblingComponentsInitialized() override;
 
     ~BunnyInputComponent() override;
-    void record() override ;
-    void play() override ;
+    void recording() override;
+    void playing() override;
+    void scrubbing() override;
+    void teleporting() override;
+    void control(InputStruct input);
     //void handleMessage(Message<INT> const &message)d;
 };
 

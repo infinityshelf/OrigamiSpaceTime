@@ -10,10 +10,19 @@
 class BunnyComponent {
 protected:
     /* serialize state */
-    virtual void record() {};
+    virtual void recording() = 0;
+
+    /* teleporting state */
+    virtual void teleporting() = 0;
+
+    /* scrub state */
+    virtual void scrubbing() = 0;
+
     /* deserialize state */
     //virtual void play(uint16_t frame) = 0;
-    virtual void play() {};
+    virtual void playing() = 0;
+
+
 };
 
 

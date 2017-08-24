@@ -3,11 +3,10 @@ set(CMAKE_CXX_STANDARD 14)
 project(OrigamiSpaceTime)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror -Wextra")
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 
 set(SOURCE_FILES
         main.cpp
-        mainGame.cpp
-        mainGame.hpp
         Bunny.cpp
         Bunny.hpp
         BunnyInputComponent.cpp
@@ -16,10 +15,12 @@ set(SOURCE_FILES
         BunnyGraphicsComponent.hpp
         BunnyPhysicsComponent.cpp
         BunnyPhysicsComponent.hpp
-        GameWorld.cpp
-        GameWorld.hpp
+        World.cpp
+        World.hpp
         BunnyComponent.cpp
-        BunnyComponent.hpp)
+        BunnyComponent.hpp
+        BunnyManager.cpp
+        BunnyManager.hpp)
 
 add_executable(OrigamiSpaceTime ${SOURCE_FILES})
 add_subdirectory(SFML-Engine)

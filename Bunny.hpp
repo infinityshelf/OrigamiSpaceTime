@@ -7,15 +7,19 @@
 
 #include "SFML-Engine/Entity.hpp"
 #include "SFML-Engine/ComponentMessaging.hpp"
+#include "BunnyManager.hpp"
 
 enum BunnyState {
     BUNNY_STATE_UNDEFINED = -1,
     BUNNY_STATE_RECORDING,
     BUNNY_STATE_TELEPORTING,
+    BUNNY_STATE_SCRUBBING,
     BUNNY_STATE_PLAYING
 };
 
-class Bunny: public Entity {
+class Bunny: public Entity,
+             public MessageHandler<INT>,
+             public MessageHandler<BOOL> {
 private:
     void initializeComponents();
     //
@@ -28,15 +32,19 @@ private:
     //
     BunnyState state_;
     BunnyState newState_;
+    //void setState(BunnyState state);
+    void handleMessage(const Message<INT> &message) override;
+    void handleMessage(const Message<BOOL> &message) override;
 public:
     //
     // time travel
     //
     const BunnyState &state = state_;
-    void setState(BunnyState state);
+    //void setState(BunnyState state);
 
-    uint16_t &birth = birth_;
-    uint16_t &death = death_;
+    const uint16_t &birth = birth_;
+    const uint16_t &death = death_;
+    static bool teleporting;
 
     //Bunny();
     Bunny(BunnyState state = BUNNY_STATE_RECORDING,

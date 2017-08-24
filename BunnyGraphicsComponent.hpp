@@ -36,8 +36,10 @@ public:
     //sf::RenderWindow &windowRef() { return *s_window; }
     static sf::Vector2i getMousePosition();
     static float getMouseDistance(sf::Vector2f position);
-    void record() override;
-    void play() override;
+    void recording() override;
+    void playing() override;
+    void scrubbing() override;
+    void teleporting() override;
 };
 
 
