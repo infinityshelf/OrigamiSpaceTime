@@ -19,7 +19,6 @@ protected:
     virtual void scrubbing() = 0;
 
     /* deserialize state */
-    //virtual void play(uint16_t frame) = 0;
     virtual void playing() = 0;
 
 
