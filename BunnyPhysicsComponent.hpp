@@ -76,7 +76,6 @@ public:
 
     sf::Vector2f getStartPosition();
     sf::Vector2f getEndPosition();
-    const sf::Vector2f &position = position_;
 };
 
 

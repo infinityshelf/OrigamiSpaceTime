@@ -19,7 +19,6 @@ BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(
     TextureManager::instance()->loadTexture(kBunnyWalk, kBunnyWalkFilePath);
     TextureManager::instance()->loadTexture(kBunnyStand, kBunnyStandFilePath);
 
-    //sprite_.setTexture(TextureManager::instance()->getRef(kBunnyWalk));
     sprite_.setTexture(TextureManager::instance()->getRef(kBunnyStand));
     sprite_.setTextureRect(sf::IntRect(0,0,16,16));
 
@@ -44,15 +43,17 @@ void BunnyGraphicsComponent::update(double elapsed) {
             break;
         }
         case BUNNY_STATE_RECORDING: {
-            sprite_.setColor(sf::Color::White);
+            sprite_.setColor(sf::Color(0xFF,0x80,0x80,0xFF));
             recording();
             break;
         }
         case BUNNY_STATE_TELEPORTING: {
+            sprite_.setColor(sf::Color(0xFF,0xFF,0x80,0xFF));
             teleporting();
             break;
         }
         case BUNNY_STATE_SCRUBBING: {
+            sprite_.setColor(sf::Color(0x80,0xFF,0x80,0xFF));
             scrubbing();
             break;
         }
@@ -68,23 +69,10 @@ void BunnyGraphicsComponent::update(double elapsed) {
     if (frame >= entity_.birth
         && frame <= entity_.death) { // death is 0xFFFF.
         sprite_.setPosition(position_->x, position_->y);
-        sprite_.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF));
         GraphicsComponent::s_window->draw(sprite_);
     } else {
         if (false) std::cout << "out of range, won't draw" << std::endl;
     }
-}
-
-BunnyGraphicsComponent::~BunnyGraphicsComponent() = default;
-
-void BunnyGraphicsComponent::handleMessage(Message<INT> const &message) {
-    std::cout << "description: "<< message.description << " message: " << message.data_ << std::endl;
-
-}
-
-sf::Vector2i BunnyGraphicsComponent::getMousePosition() {
-    sf::Vector2i mouse_pos = sf::Mouse::getPosition(*s_window);
-    return mouse_pos;
 }
 
 void BunnyGraphicsComponent::playing() {
@@ -136,3 +124,10 @@ float BunnyGraphicsComponent::getMouseDistance(sf::Vector2f position) {
     sf::Vector2i mousePos = getMousePosition();
     return sqrtf(powf(position.x - mousePos.x / 4, 2) + powf(position.y - mousePos.y / 4, 2));
 }
+
+sf::Vector2i BunnyGraphicsComponent::getMousePosition() {
+    sf::Vector2i mouse_pos = sf::Mouse::getPosition(*s_window);
+    return mouse_pos;
+}
+
+BunnyGraphicsComponent::~BunnyGraphicsComponent() = default;

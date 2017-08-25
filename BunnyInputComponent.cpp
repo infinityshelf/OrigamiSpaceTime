@@ -80,7 +80,7 @@ void BunnyInputComponent::teleporting() {
     if (input.leftMouseButtonPressed && physicsComponent_) {
         sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x / 4, BunnyGraphicsComponent::getMousePosition().y / 4);
         Message<VECTOR2i> teleportedVecMessage(data);
-        std::cout << "sending a teleport message x: " << teleportedVecMessage.data_.x << " y: " << teleportedVecMessage.data_.y << std::endl; 
+        if (debug) std::cout << "sending a teleport message x: " << teleportedVecMessage.data_.x << " y: " << teleportedVecMessage.data_.y << std::endl; 
         teleportedVecMessage.description = "teleported";
         static_cast<MessageDispatcher<VECTOR2i> *>(this)->dispatchMessage(teleportedVecMessage);
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
@@ -111,7 +111,7 @@ void BunnyInputComponent::teleporting() {
         World::instance()->currentFrame = frame;
         if (World::instance()->currentFrame < entity_.birth
             || World::instance()->currentFrame > entity_.death) {
-            std::cout << "crash, birth: " << entity_.birth << " death: " << entity_.death << " lifespan " << entity_.death - entity_.birth << " mult: " << multiplier << std::endl;
+            if (debug) std::cout << "crash, birth: " << entity_.birth << " death: " << entity_.death << " lifespan " << entity_.death - entity_.birth << " mult: " << multiplier << std::endl;
         }
     }
 }

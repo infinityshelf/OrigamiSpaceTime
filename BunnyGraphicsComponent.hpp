@@ -31,7 +31,6 @@ public:
     explicit BunnyGraphicsComponent(Bunny &bunny);
     void update(double elapsed) override;
     void siblingComponentsInitialized() override;
-    void handleMessage(Message<INT> const &message);
     ~BunnyGraphicsComponent() override;
     //sf::RenderWindow &windowRef() { return *s_window; }
     static sf::Vector2i getMousePosition();

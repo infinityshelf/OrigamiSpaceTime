@@ -20,7 +20,7 @@ void World::update(double elapsed, sf::RenderWindow &window) {
         std::cout << currentFrame << std::endl;
     }
 
-    window.clear(sf::Color::Black);
+    window.clear(sf::Color(0x30,0x30,0x30,0xFF));
     static double avg;
     avg = (avg + elapsed) / 2.0;
     if (debug) {
@@ -30,10 +30,11 @@ void World::update(double elapsed, sf::RenderWindow &window) {
     for (Entity *entity: entities) {
         entity->update(elapsed);
     }
+    
     for (sf::IntRect *rect: collidables) {
-        rectShape.setSize(sf::Vector2f(rect->width, rect->height));
         rectShape.setPosition(sf::Vector2f(rect->left, rect->top));
-        rectShape.setFillColor(sf::Color(0,0x80,0x40,0xFF));
+        rectShape.setSize(sf::Vector2f(rect->width, rect->height));
+        rectShape.setFillColor(sf::Color(0x60,0x60,0x60,0xFF));
         window.draw(rectShape);
     }
     if (logTime) window.draw(timeText);

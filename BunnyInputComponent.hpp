@@ -15,8 +15,6 @@
 class BunnyPhysicsComponent;
 
 class BunnyInputComponent: public InputComponent,
-                           //public MessageHandler<INT>,
-                           //public MessageDispatcher<INT>,
                            public MessageDispatcher<VECTOR2i>,
                            public MessageDispatcher<BOOL>,
                            public BunnyComponent {
@@ -58,7 +56,6 @@ public:
     void scrubbing() override;
     void teleporting() override;
     void control(InputStruct input);
-    //void handleMessage(Message<INT> const &message)d;
 };
 
 
