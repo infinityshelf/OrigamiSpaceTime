@@ -78,7 +78,7 @@ void BunnyInputComponent::teleporting() {
     input_ = Input::inputStruct;
 
     if (input.leftMouseButtonPressed && physicsComponent_) {
-        sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x / 4, BunnyGraphicsComponent::getMousePosition().y / 4);
+        sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x, BunnyGraphicsComponent::getMousePosition().y);
         Message<VECTOR2i> teleportedVecMessage(data);
         if (debug) std::cout << "sending a teleport message x: " << teleportedVecMessage.data_.x << " y: " << teleportedVecMessage.data_.y << std::endl; 
         teleportedVecMessage.description = "teleported";
