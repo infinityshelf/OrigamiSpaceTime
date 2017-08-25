@@ -21,6 +21,7 @@ BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(
 
     sprite_.setTexture(TextureManager::instance()->getRef(kBunnyStand));
     sprite_.setTextureRect(sf::IntRect(0,0,16,16));
+    //sprite_.setScale(3,3);
 
     teleportCircle.setPointCount(100);
     maxTeleportCircle.setPointCount(100);
@@ -113,7 +114,7 @@ void BunnyGraphicsComponent::teleporting() {
     endPositionSprite.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
     GraphicsComponent::s_window->draw(endPositionSprite);
     if (getMouseDistance(physicsComponent_->getEndPosition()) <= travelDistance) {
-        teleportingSprite.setPosition(getMousePosition().x / 4, getMousePosition().y / 4);
+        teleportingSprite.setPosition(getMousePosition().x, getMousePosition().y);
     }
 
     teleportingSprite.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
@@ -122,7 +123,7 @@ void BunnyGraphicsComponent::teleporting() {
 
 float BunnyGraphicsComponent::getMouseDistance(sf::Vector2f position) {
     sf::Vector2i mousePos = getMousePosition();
-    return sqrtf(powf(position.x - mousePos.x / 4, 2) + powf(position.y - mousePos.y / 4, 2));
+    return sqrtf(powf(position.x - mousePos.x, 2) + powf(position.y - mousePos.y, 2));
 }
 
 sf::Vector2i BunnyGraphicsComponent::getMousePosition() {

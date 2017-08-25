@@ -11,9 +11,9 @@
 #include "World.hpp"
 #include "BunnyPhysicsComponent.hpp"
 
-const unsigned int blockSize = 16;
-const unsigned int width = blockSize * 56 / 2;
-const unsigned int height = blockSize * 32 / 2;
+const unsigned int blockSize = 16 * 1;
+const unsigned int width = blockSize * 48;
+const unsigned int height = blockSize * 27;
 
 int main(int argc, const char *argv[]) {
     std::string windowTitle("Origami Space Time");
@@ -22,7 +22,7 @@ int main(int argc, const char *argv[]) {
     }
 
     sf::RenderWindow window(sf::VideoMode(width, height, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
-    window.setSize(sf::Vector2u(width * 4,height * 4));
+    window.setSize(sf::Vector2u(width,height));
     window.setPosition(sf::Vector2i(100,0));
 
     window.setFramerateLimit(60);

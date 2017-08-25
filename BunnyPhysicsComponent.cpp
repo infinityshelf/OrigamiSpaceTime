@@ -11,7 +11,7 @@ bool debug = false;
 
 BunnyPhysicsComponent::BunnyPhysicsComponent(Bunny &bunny): PhysicsComponent(bunny), entity_(bunny) {
     world_ = World::instance();
-    x_ = 32;
+    x_ = 32*3;
     y_ = 32 * 5;
 
     width_ = 16;
@@ -124,63 +124,6 @@ void BunnyPhysicsComponent::setFlags() {
     hitWallLeft_ = (World::instance()->placeFree(x - 1, y, boundingBox_) != nullptr);
     hitWallRight_ = (World::instance()->placeFree(x + 1, y, boundingBox_) != nullptr);
 }
-
-/*****
-
-void BunnyPhysicsComponent::handleMessage(Message<BOOL> const &message) {
-    if (debug) std::cout << message.data_ << std::endl;
-    if (message.description == "teleport") {
-        if (message.data_ == true) {
-            // teleport started
-        } else if (message.data_ == false) {
-            // teleport cancelled
-        }
-    }
-}
-
-void BunnyPhysicsComponent::handleMessage(Message<INT> const &message) {
-    if (debug) std::cout << message.data_ << std::endl;
-
-//
-//    if (message.description == "teleported") {
-//        uint16_t index = 0;
-//        index = message.data_ - entity_.birth;
-//        //entity_.death = message.data_;
-//        //index -= 1;
-//        if (index < recordedPositions_.size()) {
-//            sf::Vector2<uint16_t > recordedPos = recordedPositions_[index];
-//            position_ = sf::Vector2f(recordedPos.x, recordedPos.y);
-//
-//            //
-//            // This should delete all of the recorded positions before the players
-//            // landing position after a teleportation happens
-//            //
-//            // We don't want to delete the current position.
-//            // A teleportation message is received during the input phase.
-//
-//            //std::cout << "old size:" << recordedPositions_.size() << std::endl;
-//            //recordedPositions_.erase(recordedPositions_.begin(), recordedPositions_.begin() + index);
-//            //std::cout << "new size:" << recordedPositions_.size() << std::endl;
-//            Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
-//            OrigamiWorld::instance()->addEntity(newBunny);
-//        } else {
-//            std::cout << "void BunnyPhysicsComponent::handleMessage(Message<INT> const &message)\n"
-//                      << "out of range:" << std::endl
-//                      << "..valid: 0.." << recordedPositions_.size() - 1 << std::endl
-//                      << "..index:    " << index << std::endl;
-//        }
-//    }
-
-    //OrigamiWorld::instance()->currentFrame = message.data_;
-    if (message.description == "teleported") {
-        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
-        sf::Vector2i mousePos = BunnyGraphicsComponent::getMousePosition();
-        newBunny->getComponent<BunnyPhysicsComponent *>()->position_ = sf::Vector2f(mousePos.x / 4, mousePos.y / 4);
-        GameWorld::instance()->addEntity(newBunny);
-    }
-}
-
-***/
 
 void BunnyPhysicsComponent::recording() {
     assert(BunnyManager::instance()->isABunnyTeleporting() == false);
