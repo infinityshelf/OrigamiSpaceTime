@@ -127,8 +127,8 @@ float BunnyGraphicsComponent::getMouseDistance(sf::Vector2f position) {
 }
 
 sf::Vector2i BunnyGraphicsComponent::getMousePosition() {
-    sf::Vector2i mouse_pos = sf::Mouse::getPosition(*s_window);
-    return mouse_pos;
+    sf::Vector2f mouse_pos = GraphicsComponent::s_window->mapPixelToCoords(sf::Mouse::getPosition(*s_window));
+    return sf::Vector2i(mouse_pos.x, mouse_pos.y);
 }
 
 BunnyGraphicsComponent::~BunnyGraphicsComponent() = default;
