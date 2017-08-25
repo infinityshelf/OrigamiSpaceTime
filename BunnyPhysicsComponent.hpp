@@ -19,6 +19,7 @@ class BunnyInputComponent;
 class BunnyPhysicsComponent: public PhysicsComponent,
                              //public MessageHandler<INT>,
                              //public MessageHandler<BOOL>,
+                             public MessageHandler<VECTOR2i>,
                              public BunnyComponent {
 private:
     Bunny &entity_;
@@ -60,6 +61,7 @@ public:
 
     //void handleMessage(Message<BOOL> const &message) override;
     //void handleMessage(Message<INT> const &message) override;
+    void handleMessage(Message<VECTOR2i> const &message) override;
     ~BunnyPhysicsComponent() override;
 
     void recording() override;

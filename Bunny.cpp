@@ -74,13 +74,31 @@ Bunny::~Bunny() {
         delete component;
     }
 }
+//
+//void Bunny::handleMessage(const Message<INT> &message) {
+//    if (message.description == "teleported") {
+//        assert(message.data_ >= birth_ && message.data_ <= death_);
+//        newState_ = BUNNY_STATE_PLAYING;
+//
+//        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
+//        World::instance()->addEntity(newBunny);
+//    }
+//}
 
-void Bunny::handleMessage(const Message<INT> &message) {
+void Bunny::handleMessage(const Message<VECTOR2i> &message) {
     if (message.description == "teleported") {
-        assert(message.data_ >= birth_ && message.data_ <= death_);
+        uint16_t currentFrame = World::instance()->currentFrame;
+        assert(currentFrame >= birth_ && currentFrame <= death_ && "Trying to teleport out of range");
         newState_ = BUNNY_STATE_PLAYING;
 
-        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
+        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, currentFrame, 0xFFFF);
+        BunnyPhysicsComponent *physics = newBunny->getComponent<BunnyPhysicsComponent *>();
+
+        if (physics) {
+            addHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));
+            dispatchMessage(message);
+            removeHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));
+        }
         World::instance()->addEntity(newBunny);
     }
 }

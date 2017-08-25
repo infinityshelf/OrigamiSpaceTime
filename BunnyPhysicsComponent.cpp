@@ -227,4 +227,10 @@ sf::Vector2f BunnyPhysicsComponent::getStartPosition() {
     return start;
 }
 
+void BunnyPhysicsComponent::handleMessage(Message<VECTOR2i> const &message) {
+    if (message.description == "teleported") {
+        position_ = sf::Vector2f(message.data_.x, message.data_.y);
+    }
+}
+
 BunnyPhysicsComponent::~BunnyPhysicsComponent() = default;

@@ -15,7 +15,7 @@ World *World::s_instance = nullptr;
 void World::update(double elapsed, sf::RenderWindow &window) {
     std::ostringstream time;
     if (logTime) {
-        time << std::setfill('0') << std::setw(2) << currentFrame / 60 / 60 << ":"<< std::setfill('0') << std::setw(2) << currentFrame / 60 << ":"<< std::setfill('0') << std::setw(4) << (currentFrame % 60) * 1.66;
+        time << std::setfill('0') << std::setw(2) << currentFrame / 60 / 60 << ":"<< std::setfill('0') << std::setw(2) << currentFrame / 60 << ":"<< std::setfill('0') << std::setw(4) << (currentFrame % 60) * 1.66    ;
         timeText.setString(time.str());
         std::cout << currentFrame << std::endl;
     }

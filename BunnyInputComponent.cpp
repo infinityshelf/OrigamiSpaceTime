@@ -10,7 +10,8 @@ const bool debug = false;
 
 BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
     static_cast<MessageDispatcher<BOOL> *>(this)->addHandler(static_cast<MessageHandler<BOOL> *>(&entity_));
-    static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(&entity_));
+    static_cast<MessageDispatcher<VECTOR2i> *>(this)->addHandler(static_cast<MessageHandler<VECTOR2i> *>(&entity_));
+    //static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(&entity_));
 }
 
 void BunnyInputComponent::update(double elapsed) {
@@ -75,12 +76,19 @@ void BunnyInputComponent::recording() {
 
 void BunnyInputComponent::teleporting() {
     input_ = Input::inputStruct;
+
     if (input.leftMouseButtonPressed) {
 
-        uint16_t frame = World::instance()->currentFrame;
-        Message<INT> teleportedMessage(frame);
-        teleportedMessage.description = "teleported";
-        static_cast<MessageDispatcher<INT> *>(this)->dispatchMessage(teleportedMessage);
+//        uint16_t frame = World::instance()->currentFrame;
+//        Message<INT> teleportedMessage(frame);
+//        teleportedMessage.description = "teleported";
+//        static_cast<MessageDispatcher<INT> *>(this)->dispatchMessage(teleportedMessage);
+
+        //uint16_t frame = World::instance()->currentFrame;
+        sf::Vector2i data(200,200);
+        Message<VECTOR2i> teleportedVecMessage(data);
+        teleportedVecMessage.description = "teleported";
+        static_cast<MessageDispatcher<VECTOR2i> *>(this)->dispatchMessage(teleportedVecMessage);
 
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 
@@ -107,6 +115,10 @@ void BunnyInputComponent::teleporting() {
         uint16_t frame = entity_.death - lifeSpan * multiplier;
 
         World::instance()->currentFrame = entity_.birth + static_cast<uint16_t >(frame);
+        if (World::instance()->currentFrame < entity_.birth
+            || World::instance()->currentFrame > entity_.death) {
+            std::cout << "will crash" << std::endl;
+        }
 
     }
 }
