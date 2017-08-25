@@ -77,19 +77,12 @@ void BunnyInputComponent::recording() {
 void BunnyInputComponent::teleporting() {
     input_ = Input::inputStruct;
 
-    if (input.leftMouseButtonPressed) {
-
-//        uint16_t frame = World::instance()->currentFrame;
-//        Message<INT> teleportedMessage(frame);
-//        teleportedMessage.description = "teleported";
-//        static_cast<MessageDispatcher<INT> *>(this)->dispatchMessage(teleportedMessage);
-
-        //uint16_t frame = World::instance()->currentFrame;
-        sf::Vector2i data(200,200);
+    if (input.leftMouseButtonPressed && physicsComponent_) {
+        sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x / 4, BunnyGraphicsComponent::getMousePosition().y / 4);
         Message<VECTOR2i> teleportedVecMessage(data);
+        std::cout << "sending a teleport message x: " << teleportedVecMessage.data_.x << " y: " << teleportedVecMessage.data_.y << std::endl; 
         teleportedVecMessage.description = "teleported";
         static_cast<MessageDispatcher<VECTOR2i> *>(this)->dispatchMessage(teleportedVecMessage);
-
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 
         bool data = false;
@@ -110,16 +103,16 @@ void BunnyInputComponent::teleporting() {
         multiplier = (multiplier > 1.f) ? 1.f : multiplier;
 
         if (debug) std::cout << "multiplier: " << multiplier << std::endl;
+
         uint16_t lifeSpan = entity_.death - entity_.birth;
 
         uint16_t frame = entity_.death - lifeSpan * multiplier;
 
-        World::instance()->currentFrame = entity_.birth + static_cast<uint16_t >(frame);
+        World::instance()->currentFrame = frame;
         if (World::instance()->currentFrame < entity_.birth
             || World::instance()->currentFrame > entity_.death) {
-            std::cout << "will crash" << std::endl;
+            std::cout << "crash, birth: " << entity_.birth << " death: " << entity_.death << " lifespan " << entity_.death - entity_.birth << " mult: " << multiplier << std::endl;
         }
-
     }
 }
 
