@@ -14,16 +14,16 @@ BunnyPhysicsComponent::BunnyPhysicsComponent(Bunny &bunny): PhysicsComponent(bun
     x_ = 32*3;
     y_ = 32 * 5;
 
-    width_ = 16;
-    height_ = 16;
+    width_ = 64;
+    height_ = 64;
 
     boundingBox_.left = x_ - size.x / 2;
     boundingBox_.top = y_ - size.y / 2;
     boundingBox_.width = width_;
     boundingBox_.height = height_;
-    runSpeed_ = 3;
-    jumpSpeed_ = 8;
-    maxFallSpeed_ = 5;
+    runSpeed_ = 3 + 10;
+    jumpSpeed_ = 8 + 23;
+    maxFallSpeed_ = 5 + 10;
 
     hitWallRight_ = hitWallLeft_ = hittingCeiling_ = grounded_ = false;
 }

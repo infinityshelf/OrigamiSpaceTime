@@ -21,7 +21,7 @@ BunnyGraphicsComponent::BunnyGraphicsComponent(Bunny &bunny): GraphicsComponent(
 
     sprite_.setTexture(TextureManager::instance()->getRef(kBunnyStand));
     sprite_.setTextureRect(sf::IntRect(0,0,16,16));
-    //sprite_.setScale(3,3);
+    sprite_.setScale(4, 4);
 
     teleportCircle.setPointCount(100);
     maxTeleportCircle.setPointCount(100);

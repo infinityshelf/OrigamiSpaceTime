@@ -147,14 +147,14 @@ void BunnyInputComponent::playing() {
 void BunnyInputComponent::control(InputStruct input) {
     //x_ = 0;
     if (input.right) {
-        x_ += 1;
+        x_ += 5;
         if (x_ > runSpeed_) {
             x_ = runSpeed_;
         }
 
     }
     if (input.left) {
-        x_ -= 1;
+        x_ -= 5;
         if (x_ < -runSpeed_) {
             x_ = -runSpeed_;
         }
@@ -173,7 +173,7 @@ void BunnyInputComponent::control(InputStruct input) {
         if (y_ > maxFallSpeed_) {
             y_ = maxFallSpeed_;
         } else {
-            y_ += 0.5f;
+            y_ += 2.0f;
         }
 
     }
@@ -191,7 +191,7 @@ void BunnyInputComponent::control(InputStruct input) {
     }
 
     if (input.right == input.left) {
-        x_ *= 0.5;
+        x_ *= 0.25;
     }
 
 }
