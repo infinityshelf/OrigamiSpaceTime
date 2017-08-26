@@ -117,7 +117,7 @@ void BunnyGraphicsComponent::teleporting() {
         teleportingSprite.setPosition(getMousePosition().x, getMousePosition().y);
     }
 
-    teleportingSprite.setColor(sf::Color(0xFF,0xFF,0xFF,0xFF / 4));
+    teleportingSprite.setColor(sf::Color(0x80,0xFF,0xFF,0xFF));
     GraphicsComponent::s_window->draw(teleportingSprite);
 }
 
