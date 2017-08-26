@@ -11,9 +11,9 @@
 #include "World.hpp"
 #include "BunnyPhysicsComponent.hpp"
 
-const unsigned int blockSize = 16;
-const unsigned int width = blockSize * 40;
-const unsigned int height = blockSize * 30;
+const unsigned int blockSize = 60;
+const unsigned int width = 1920;
+const unsigned int height = 1080;
 
 int main(int argc, const char *argv[]) {
     std::string windowTitle("Origami Space Time");
@@ -21,9 +21,9 @@ int main(int argc, const char *argv[]) {
         windowTitle = std::string(argv[1]);
     }
 
-    sf::RenderWindow window(sf::VideoMode(width, height, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
-    window.setSize(sf::Vector2u(width * 3, height * 3));
-    window.setPosition(sf::Vector2i(100,0));
+    sf::RenderWindow window(sf::VideoMode(1920, 1080, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
+    //window.setSize(sf::Vector2u(width * 3, height * 3));
+    window.setPosition(sf::Vector2i(0,0));
 
     window.setFramerateLimit(60);
     window.setVerticalSyncEnabled(true);
@@ -40,7 +40,7 @@ int main(int argc, const char *argv[]) {
                 world->addCollidable(new sf::IntRect(i * blockSize, j * blockSize, blockSize, blockSize));
             }
 
-            if ((i >= 2 && i <= 8)
+            if ((i >= 3 && i <= 9)
                 &&(j == height / blockSize - 5)) {
                 world->addCollidable(new sf::IntRect(i * blockSize, j * blockSize, blockSize, blockSize));
             }
