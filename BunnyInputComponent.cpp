@@ -190,7 +190,7 @@ void BunnyInputComponent::control(InputStruct input) {
         x_ = 0;
     }
 
-    if (input.right == false && input.left == false) {
+    if (input.right == input.left) {
         x_ *= 0.5;
     }
 
