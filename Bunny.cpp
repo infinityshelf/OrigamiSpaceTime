@@ -37,6 +37,7 @@ void Bunny::update(double elapsed) {
             if (newState_ == BUNNY_STATE_TELEPORTING) {
                 // player wants to teleport
                 death_ = World::instance()->currentFrame;
+                BunnyManager::teleporting_ = true;
             }
             break;
         }
@@ -44,20 +45,22 @@ void Bunny::update(double elapsed) {
             if (newState_ == BUNNY_STATE_RECORDING) {
                 // teleport canceled
                 death_ = 0xFFFF;
+                BunnyManager::teleporting_ = false;
             }
             if (newState_ == BUNNY_STATE_PLAYING) {
                 // teleport was successful?
+                BunnyManager::teleporting_ = false;
             }
             break;
         }
         case BUNNY_STATE_SCRUBBING: {
-            if (BunnyManager::instance()->isABunnyTeleporting() == false) {
+            if (BunnyManager::teleporting == false) {
                 newState_ = BUNNY_STATE_PLAYING;
             }
             break;
         }
         case BUNNY_STATE_PLAYING: {
-            if (BunnyManager::instance()->isABunnyTeleporting() == true) {
+            if (BunnyManager::teleporting == true) {
                 newState_ = BUNNY_STATE_SCRUBBING;
             }
             break;

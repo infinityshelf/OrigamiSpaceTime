@@ -6,43 +6,20 @@
 
 BunnyManager* BunnyManager::s_instance = nullptr;
 
+bool BunnyManager::teleporting_ = false;
+const bool &BunnyManager::teleporting = teleporting_;
+
 void BunnyManager::addBunny(Bunny *bunny) {
     static bool debug;
-    bool shouldAdd = true;
     for (Bunny *aBunny: bunnies_) {
         if (aBunny == bunny) {
-            shouldAdd = false;
-            break;
+            if (debug) std::cout << "That Bunny is already in the Bunny Manager." << std::endl;
+            return;
         }
     }
-    if (shouldAdd == true) {
-        this->bunnies_.push_back(bunny);
-    } else {
-        if (debug) std::cout << "That Bunny is already in the Bunny Manager." << std::endl;
-    }
-
+    this->bunnies_.push_back(bunny);
 }
 
 void BunnyManager::removeBunny(Bunny *bunny) {
     bunnies_.erase(std::remove(bunnies_.begin(), bunnies_.end(), bunny), bunnies_.end());
-}
-
-bool BunnyManager::isABunnyTeleporting() {
-    for (Bunny *bun: bunnies_) {
-        if (bun->state == BUNNY_STATE_TELEPORTING) {
-            return true;
-        }
-    }
-    return false;
-}
-
-void BunnyManager::handleMessage(Message<BOOL> const &message) {
-    if (message.description == "teleport") {
-        if (message.data_ == true) {
-
-        } else if (message.data_ == false) {
-
-        }
-    }
-
 }

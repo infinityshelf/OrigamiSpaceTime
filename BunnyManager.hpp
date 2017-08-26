@@ -10,13 +10,15 @@
 
 class Bunny;
 
-class BunnyManager: public MessageHandler<BOOL>,
-                    public MessageDispatcher<BOOL> {
+class BunnyManager: public MessageDispatcher<BOOL> {
 private:
     static BunnyManager *s_instance;
+    static bool teleporting_;
     BunnyManager() = default;
     std::vector<Bunny *> bunnies_;
 public:
+    friend class Bunny;
+    static const bool &teleporting;
     static BunnyManager *instance() {
         if (!s_instance) {
             s_instance = new BunnyManager();
@@ -25,11 +27,7 @@ public:
     }
     void addBunny(Bunny *bunny);
     void removeBunny(Bunny *bunny);
-    bool isABunnyTeleporting();
     ~BunnyManager() = default;
-
-    void handleMessage(Message<BOOL> const &message) override;
-
 };
 
 

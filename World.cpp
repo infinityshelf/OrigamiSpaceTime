@@ -40,7 +40,7 @@ void World::update(double elapsed, sf::RenderWindow &window) {
     if (logTime) window.draw(timeText);
     window.display();
 
-    if (BunnyManager::instance()->isABunnyTeleporting() == false) currentFrame_++;
+    if (BunnyManager::teleporting == false) currentFrame_++;
 }
 
 World::World()  {

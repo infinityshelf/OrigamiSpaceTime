@@ -126,7 +126,7 @@ void BunnyPhysicsComponent::setFlags() {
 }
 
 void BunnyPhysicsComponent::recording() {
-    assert(BunnyManager::instance()->isABunnyTeleporting() == false);
+    assert(BunnyManager::teleporting == false);
     assert(recordedPositions_.size() < 0xFFFF && "Why do you need so many bytes?!");
     recordedPositions_.push_back(sf::Vector2<uint16_t >(x,y));
     controlUsingInput();
