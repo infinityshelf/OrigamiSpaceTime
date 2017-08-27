@@ -80,7 +80,8 @@ void BunnyInputComponent::teleporting() {
     if (input.leftMouseButtonPressed && physicsComponent_) {
         sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x, BunnyGraphicsComponent::getMousePosition().y);
         Message<VECTOR2i> teleportedVecMessage(data);
-        if (debug) std::cout << "sending a teleport message x: " << teleportedVecMessage.data_.x << " y: " << teleportedVecMessage.data_.y << std::endl; 
+        if (debug) std::cout    << "sending a teleport message x: " << teleportedVecMessage.data_.x
+                                << " y: " << teleportedVecMessage.data_.y << std::endl; 
         teleportedVecMessage.description = "teleported";
         static_cast<MessageDispatcher<VECTOR2i> *>(this)->dispatchMessage(teleportedVecMessage);
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
@@ -147,14 +148,14 @@ void BunnyInputComponent::playing() {
 void BunnyInputComponent::control(InputStruct input) {
     //x_ = 0;
     if (input.right) {
-        x_ += 5;
+        x_ += 2;
         if (x_ > runSpeed_) {
             x_ = runSpeed_;
         }
 
     }
     if (input.left) {
-        x_ -= 5;
+        x_ -= 2;
         if (x_ < -runSpeed_) {
             x_ = -runSpeed_;
         }
@@ -191,7 +192,7 @@ void BunnyInputComponent::control(InputStruct input) {
     }
 
     if (input.right == input.left) {
-        x_ *= 0.25;
+        x_ *= 0.6f;
     }
 
 }
