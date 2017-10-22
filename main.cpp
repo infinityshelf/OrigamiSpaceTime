@@ -10,12 +10,14 @@
 #include "Bunny.hpp"
 #include "World.hpp"
 #include "BunnyPhysicsComponent.hpp"
+#include "Door.hpp"
 
-const unsigned int blockSize = 60;
-const unsigned int width = 1920;
-const unsigned int height = 1080;
+// const unsigned int blockSize = 60;
+// const unsigned int width = 1920;
+// const unsigned int height = 1080;
 
 int main(int argc, const char *argv[]) {
+    std::cout << "bananas" << std::endl;
     std::string windowTitle("Origami Space Time");
     if (argc > 1) {
         windowTitle = std::string(argv[1]);
@@ -33,21 +35,16 @@ int main(int argc, const char *argv[]) {
     GraphicsComponent::setWindow(&window);
 
     World *world = World::instance();
-
-    for (unsigned int i = 0; i < width / blockSize; i++) {
-        for (unsigned int j = 0; j < height / blockSize; j++) {
-            if (i == 0 || j == 0 || i == (width / blockSize) - 1 || j == (height / blockSize) - 1) {
-                world->addCollidable(new sf::IntRect(i * blockSize, j * blockSize, blockSize, blockSize));
-            }
-
-            if ((i >= 3 && i <= 9)
-                &&(j == height / blockSize - 5)) {
-                world->addCollidable(new sf::IntRect(i * blockSize, j * blockSize, blockSize, blockSize));
-            }
-        }
-    }
     Bunny *player = new Bunny();
-    world->addEntity(player);
+    //Door *door = new Door();
+    world->level->addEntity(player);
+    //world->level->addEntity(door);
+    //world->level = new Level(0);
+    //world->level = Level::Read("Level0.origami");
+    //std::cout << "world->level: " << world->level << std::endl;
+    //assert(false);
+
+
     Input::clearInput();
     
     while (window.isOpen()) {

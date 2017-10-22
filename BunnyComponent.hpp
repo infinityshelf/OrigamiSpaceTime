@@ -5,7 +5,7 @@
 #ifndef ORIGAMISPACETIME_BUNNYCOMPONENT_HPP
 #define ORIGAMISPACETIME_BUNNYCOMPONENT_HPP
 
-#include <cinttypes>
+//#include <cinttypes>
 
 class BunnyComponent {
 protected:

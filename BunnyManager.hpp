@@ -17,6 +17,7 @@ private:
     BunnyManager() = default;
     std::vector<Bunny *> bunnies_;
 public:
+    const std::vector<Bunny *> &bunnies = bunnies_;
     friend class Bunny;
     static const bool &teleporting;
     static BunnyManager *instance() {

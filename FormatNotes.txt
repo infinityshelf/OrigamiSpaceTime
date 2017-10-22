@@ -1,0 +1,12 @@
+.origami
+
+OFFSET | SIZE | DESCRIPTION
+-------+------+------------
+0x00   | 0x4  | File size in bytes
+0x04   | 0x1  | Type (enum, 1 == Level)
+
+LEVEL:
+OFFSET  | SIZE | DESCRIPTION
+--------+------+------------
+0x05    | 0xFF | Level title
+0x104   | 0x

@@ -29,16 +29,23 @@ void World::update(double elapsed, sf::RenderWindow &window) {
         std::cout << "elapsed: " << elapsed << std::endl;
         std::cout << "average: " << avg << std::endl;
     }
-    for (Entity *entity: entities) {
+    for (Entity *entity: level->entities) {
         entity->update(elapsed);
     }
     
-    for (sf::IntRect *rect: collidables) {
+    static bool once = true;
+
+    sf::RectangleShape rectShape;
+    for (sf::Rect<uint16_t> *rect: level->collidables) {
         rectShape.setPosition(sf::Vector2f(rect->left, rect->top));
         rectShape.setSize(sf::Vector2f(rect->width, rect->height));
         rectShape.setFillColor(sf::Color(0x60,0x60,0x60,0xFF));
         window.draw(rectShape);
+        if (once == true) {
+            //std::cout << "left: " << rect->left << "top: " << rect->top << "width: " << rect->width << "height: " << rect->height << std::endl;
+        }
     }
+    once = false;
 
     if (logTime) window.draw(timeText);
     window.display();
@@ -47,6 +54,11 @@ void World::update(double elapsed, sf::RenderWindow &window) {
 }
 
 World::World()  {
+    level = new Level();
+    //level->write("Level0.origami");
+
+    Level::Read(level, "Level0.origami");
+
     currentFrame_ = 0;
     timeFont.loadFromFile("DroidSansMono.ttf");
     timeText.setFont(timeFont);

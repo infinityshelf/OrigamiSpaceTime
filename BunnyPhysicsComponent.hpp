@@ -22,11 +22,12 @@ class BunnyPhysicsComponent: public PhysicsComponent,
                              public MessageHandler<VECTOR2i>,
                              public BunnyComponent {
 private:
+    World *world_;
     Bunny &entity_;
     const sf::Vector2f *inputVector_;
 
 
-    sf::IntRect boundingBox_;
+    sf::Rect<uint16_t> boundingBox_;
     bool grounded_;
     bool hittingCeiling_;
     bool hitWallLeft_;

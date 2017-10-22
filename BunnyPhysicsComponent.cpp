@@ -61,9 +61,9 @@ void BunnyPhysicsComponent::controlUsingInput() {
 
     sf::Vector2f velocity = (inputVector_) ? *inputVector_ : sf::Vector2f(0,0);
 
-    const sf::IntRect *result;
+    const sf::Rect<uint16_t> *result;
 
-    result = World::instance()->placeFree(x + velocity.x, y, boundingBox_);
+    result = World::instance()->level->placeFree(x + velocity.x, y, &boundingBox_);
 
     if (result == nullptr) {
         x_ += velocity.x;
@@ -75,7 +75,7 @@ void BunnyPhysicsComponent::controlUsingInput() {
         }
     }
 
-    result = World::instance()->placeFree(x , y + velocity.y, boundingBox_);
+    result = World::instance()->level->placeFree(x , y + velocity.y, &boundingBox_);
 
     if (result == nullptr) {
         y_ += velocity.y;
@@ -119,10 +119,10 @@ void BunnyPhysicsComponent::siblingComponentsInitialized() {
 }
 
 void BunnyPhysicsComponent::setFlags() {
-    grounded_ = (World::instance()->placeFree(x, y + 1, boundingBox_) != nullptr);
-    hittingCeiling_ = (World::instance()->placeFree(x, y - 1, boundingBox_) != nullptr);
-    hitWallLeft_ = (World::instance()->placeFree(x - 1, y, boundingBox_) != nullptr);
-    hitWallRight_ = (World::instance()->placeFree(x + 1, y, boundingBox_) != nullptr);
+    grounded_ =       (World::instance()->level->placeFree(x, y + 1, &boundingBox_) != nullptr);
+    hittingCeiling_ = (World::instance()->level->placeFree(x, y - 1, &boundingBox_) != nullptr);
+    hitWallLeft_ =    (World::instance()->level->placeFree(x - 1, y, &boundingBox_) != nullptr);
+    hitWallRight_ =   (World::instance()->level->placeFree(x + 1, y, &boundingBox_) != nullptr);
 }
 
 void BunnyPhysicsComponent::recording() {

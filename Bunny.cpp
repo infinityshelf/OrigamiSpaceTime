@@ -102,7 +102,7 @@ void Bunny::handleMessage(const Message<VECTOR2i> &message) {
             dispatchMessage(message);
             removeHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));
         }
-        World::instance()->addEntity(newBunny);
+        World::instance()->level->addEntity(newBunny);
     }
 }
 
@@ -113,5 +113,7 @@ void Bunny::handleMessage(const Message<BOOL> &message) {
         } else {
             newState_ = BUNNY_STATE_RECORDING;
         }
+    } else if (message.description == "door_collision") {
+        std::cout << "door message recieved!" << std::endl;
     }
 }

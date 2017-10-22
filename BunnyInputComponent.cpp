@@ -161,13 +161,13 @@ void BunnyInputComponent::control(InputStruct input) {
         }
     }
 
-    if (input.upPressed && *grounded_) {
+    if (input.spacePressed && *grounded_) {
         y_ -= jumpSpeed_;
     }
 
     if (*grounded_ == true) {
         y_ = 0;
-        if (input.upPressed) {
+        if (input.spacePressed) {
             y_ -= jumpSpeed_;
         }
     } else {
