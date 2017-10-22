@@ -183,7 +183,13 @@ void Level::Read(Level *pLevel, const char * fileName) {
         std::cout << "sizeof(sf::Rect<uint16_t>): " << sizeof(sf::Rect<uint16_t>) << std::endl;
         uint16_t collidablesCount = sizeOfCollidables / sizeof(sf::Rect<uint16_t>);
 
-        fseek(fp, 12, SEEK_CUR);
+        fpos_t size;
+
+        //TODO at this point, cursor is 12 bytes short of the collidables offset, find out why.
+        //fgetpos(fp, &size);
+
+        fseek(fp, level.levelInfo.collidablesOffset, SEEK_SET);
+        fgetpos(fp, &size);
         for (uint16_t i = 0; i < collidablesCount; i++) {
             sf::Rect<uint16_t> *collidable = new sf::Rect<uint16_t >();
             fread(collidable, sizeof(sf::Rect<uint16_t>), 1, fp);
