@@ -54,7 +54,8 @@ void Level::write(const char * fileName) {
         fwrite(&header.type, 1, 1, fp);
         fwrite(&header.size, sizeof(uint16_t), 1, fp);
 
-        fseek(fp, 16, SEEK_CUR); // lin 93
+        //fseek(fp, 12, SEEK_CUR); // lin 93
+        fwrite("\xFF\xFF\xFF\xFF\xFF\xFF", 12, 1, fp);
 
         fpos_t nameOff;
         fgetpos(fp, &nameOff);
@@ -63,19 +64,16 @@ void Level::write(const char * fileName) {
 
         fpos_t entryDoorOff;
         fgetpos(fp, &entryDoorOff);
-        
 
-        fwrite(&levelInfo.entry.x, 2, 1, fp); // 1
-        fwrite(&levelInfo.entry.y, 2, 1, fp); // 1
-        //fwrite(&levelInfo.entry, sizeof(Door), 1, fp);
+        fwrite(&levelInfo.entry.x, 2, 1, fp); // 2
+        fwrite(&levelInfo.entry.y, 2, 1, fp); // 2
 
         fpos_t exitDoorOff;
         fgetpos(fp, &exitDoorOff);
         
         
-        fwrite(&levelInfo.exit.x, 2, 1, fp); // 1
-        fwrite(&levelInfo.exit.y, 2, 1, fp); // 1
-        //fwrite(&levelInfo.exit, sizeof(Door), 1, fp);
+        fwrite(&levelInfo.exit.x, 2, 1, fp); // 2
+        fwrite(&levelInfo.exit.y, 2, 1, fp); // 2
 
         fpos_t collidablesOff;
         fgetpos(fp, &collidablesOff);
@@ -158,8 +156,7 @@ void Level::Read(Level *pLevel, const char * fileName) {
         fread(&level.levelInfo.entryDoorOffset, sizeof(uint16_t), 1, fp);
         fread(&level.levelInfo.exitDoorOffset, sizeof(uint16_t), 1, fp);
         fread(&level.levelInfo.collidablesOffset, sizeof(uint16_t), 1, fp);
-
-        //assert(false && "Level Info");
+        fread(&level.levelInfo.name, 8, 1, fp);
 
         printf("type: ");
         for (int i = 0; i < 4; i++) {
@@ -183,23 +180,9 @@ void Level::Read(Level *pLevel, const char * fileName) {
         std::cout << "sizeof(sf::Rect<uint16_t>): " << sizeof(sf::Rect<uint16_t>) << std::endl;
         uint16_t collidablesCount = sizeOfCollidables / sizeof(sf::Rect<uint16_t>);
 
-        fpos_t size;
-
-        //TODO at this point, cursor is 12 bytes short of the collidables offset, find out why.
-        //fgetpos(fp, &size);
-
-        fseek(fp, level.levelInfo.collidablesOffset, SEEK_SET);
-        fgetpos(fp, &size);
         for (uint16_t i = 0; i < collidablesCount; i++) {
             sf::Rect<uint16_t> *collidable = new sf::Rect<uint16_t >();
             fread(collidable, sizeof(sf::Rect<uint16_t>), 1, fp);
-//            fread(&collidable.left, sizeof(int), 1, fp);
-//            fread(&collidable.top, sizeof(int), 1, fp);
-//            fread(&collidable.width, sizeof(int), 1, fp);
-//            fread(&collidable.height, sizeof(int), 1, fp);
-             if (collidable == nullptr) {
-                std::cout << "";
-            }
             level.addCollidable(collidable);
         }
 

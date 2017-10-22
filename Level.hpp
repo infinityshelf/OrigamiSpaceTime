@@ -51,7 +51,7 @@ struct LevelInfo {
     Door entry;
     Door exit;
     // Button *buttons;
-    sf::IntRect *collidables;
+    //sf::IntRect *collidables;
 };
 
 class Level: public CollidableManager,
