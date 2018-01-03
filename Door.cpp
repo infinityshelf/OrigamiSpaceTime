@@ -1,13 +1,12 @@
 #include "Door.hpp"
-#include "DoorPhysicsComponent.hpp"
-#include "DoorGraphicsComponent.hpp"
 
 const bool debug = false;
 
-Door::Door() {
-
-    components.push_back(new DoorPhysicsComponent(*this));
-    components.push_back(new DoorGraphicsComponent(*this));
+Door::Door(sf::Vector2f position) {
+    physics = new DoorPhysicsComponent(*this, position);
+    graphics = new DoorGraphicsComponent(*this);
+    components.push_back(physics);
+    components.push_back(graphics);
     for (Component *component: components) {
         component->siblingComponentsInitialized();
     }

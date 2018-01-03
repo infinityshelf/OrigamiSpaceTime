@@ -91,11 +91,15 @@ Bunny::~Bunny() {
 void Bunny::handleMessage(const Message<VECTOR2i> &message) {
     if (message.description == "teleported") {
         uint16_t currentFrame = World::instance()->currentFrame;
-        assert(currentFrame >= birth_ && currentFrame <= death_ && "Trying to teleport out of range");
+        assert(currentFrame >= birth_
+            && currentFrame <= death_
+            && "Trying to teleport out of range");
         newState_ = BUNNY_STATE_PLAYING;
 
-        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, currentFrame, 0xFFFF);
-        BunnyPhysicsComponent *physics = newBunny->getComponent<BunnyPhysicsComponent *>();
+        Bunny *newBunny;
+        newBunny = new Bunny(BUNNY_STATE_RECORDING, currentFrame, 0xFFFF);
+        BunnyPhysicsComponent *physics;
+        physics = newBunny->getComponent<BunnyPhysicsComponent *>();
 
         if (physics) {
             addHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));

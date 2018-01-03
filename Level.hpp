@@ -48,10 +48,10 @@ struct LevelInfo {
     // uint8_t buttonsOffset = 0xFF;
     uint8_t collidablesOffset = 0xFF;
     char name[8] = "";
-    Door entry;
-    Door exit;
-    // Button *buttons;
-    //sf::IntRect *collidables;
+    uint16_t entry_x;
+    uint16_t entry_y;
+    uint16_t exit_x;
+    uint16_t exit_y;
 };
 
 class Level: public CollidableManager,
@@ -59,7 +59,8 @@ class Level: public CollidableManager,
 private:
     Header header;
     LevelInfo levelInfo;
-    std::vector<Door *> doors;
+    Door *entry_ = nullptr;
+    Door *exit_ = nullptr;
 public:
     void write(const char * fileName);
     static void Read(Level *level, const char * fileName);

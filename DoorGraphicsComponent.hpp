@@ -3,7 +3,9 @@
 
 #include "SFML-Engine/GraphicsComponent.hpp"
 #include "Door.hpp"
-#include "DoorPhysicsComponent.hpp"
+//#include "DoorPhysicsComponent.hpp"
+
+class Door;
 
 
 class DoorPhysicsComponent;

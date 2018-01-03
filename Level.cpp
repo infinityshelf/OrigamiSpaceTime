@@ -31,6 +31,13 @@ Level::Level(unsigned int levelId) {
                     }
                 }
             }
+
+            entry_ = new Door(sf::Vector2f(60*2, 60*16));
+            exit_ = new Door(sf::Vector2f(60*30, 60*16));
+            //levelInfo.entry = *entry;
+            //levelInfo.exit = *exit;
+            addEntity(static_cast<Entity *>(entry_));
+            addEntity(static_cast<Entity *>(exit_));
             break;
         }
         case 1: {
@@ -65,15 +72,20 @@ void Level::write(const char * fileName) {
         fpos_t entryDoorOff;
         fgetpos(fp, &entryDoorOff);
 
-        fwrite(&levelInfo.entry.x, 2, 1, fp); // 2
-        fwrite(&levelInfo.entry.y, 2, 1, fp); // 2
+        //fwrite(&levelInfo.entry.x, 2, 1, fp); // 2
+        //fwrite(&levelInfo.entry.y, 2, 1, fp); // 2
+        uint16_t val;
+        val = (uint16_t)entry_->getComponent<DoorPhysicsComponent *>()->x;
+        fwrite(&val, sizeof(uint16_t), 1, fp);
+        val = (uint16_t)entry_->getComponent<DoorPhysicsComponent *>()->y;
+        fwrite(&val, sizeof(uint16_t), 1, fp);
+        val = (uint16_t)exit_->getComponent<DoorPhysicsComponent *>()->x;
+        fwrite(&val, sizeof(uint16_t), 1, fp);
+        val = (uint16_t)exit_->getComponent<DoorPhysicsComponent *>()->y;
+        fwrite(&val, sizeof(uint16_t), 1, fp);
 
         fpos_t exitDoorOff;
         fgetpos(fp, &exitDoorOff);
-        
-        
-        fwrite(&levelInfo.exit.x, 2, 1, fp); // 2
-        fwrite(&levelInfo.exit.y, 2, 1, fp); // 2
 
         fpos_t collidablesOff;
         fgetpos(fp, &collidablesOff);
@@ -109,19 +121,15 @@ void Level::write(const char * fileName) {
         
 
         fseek(fp, 0, SEEK_END);
-
         fpos_t size;
         fgetpos(fp, &size);
 
         fseek(fp, 6, SEEK_SET);
-
         fwrite(&size, sizeof(uint16_t), 1, fp);
 
         fclose(fp);
-        std::cout << "closed file" << std::endl;
-        std::cout << "size of fpos_t is: " << sizeof(fpos_t) << std::endl;
     } else {
-        assert(false);
+        assert(false && "File was null");
     }
 }
 
@@ -129,28 +137,12 @@ void Level::Read(Level *pLevel, const char * fileName) {
     FILE *fp = fopen(fileName, "r");
 
     if (fp != NULL && pLevel != nullptr) {
-        // opened file
         Level &level = *pLevel;
 
         fread(level.header.signature, 1, 4, fp);
         fread(&level.header.version, 1, 1, fp);
         fread(&level.header.type, 1, 1, fp);
         fread(&level.header.size, 2, 1, fp);
-
-        //assert(false && "Header");
-
-        printf("signature: ");
-        for (int i = 0; i < 4; i++) {
-            printf("%c", level.header.signature[i]);
-            if (i == 3) {
-                printf("\n");
-            }
-        }
-        printf("version: %d\n", level.header.version);
-        printf("type: %d\n", level.header.type);
-        printf("size: %#02x\n", level.header.size);
-
-
         fread(level.levelInfo.type, sizeof(char), 4, fp);
         fread(&level.levelInfo.nameOffset, sizeof(uint16_t), 1, fp);
         fread(&level.levelInfo.entryDoorOffset, sizeof(uint16_t), 1, fp);
@@ -158,26 +150,25 @@ void Level::Read(Level *pLevel, const char * fileName) {
         fread(&level.levelInfo.collidablesOffset, sizeof(uint16_t), 1, fp);
         fread(&level.levelInfo.name, 8, 1, fp);
 
-        printf("type: ");
-        for (int i = 0; i < 4; i++) {
-            printf("%c", level.levelInfo.type[i]);
-            if (i == 3) {
-                printf("\n");
-            }
-        }
-        printf("nameOffset: %#02x\n", level.levelInfo.nameOffset);
-        printf("entryDoorOffset: %#02x\n", level.levelInfo.entryDoorOffset);
-        printf("exitDoorOffset: %#02x\n", level.levelInfo.exitDoorOffset);
-        printf("collidablesOffset: %#02x\n", level.levelInfo.collidablesOffset);
 
-        fread(&level.levelInfo.entry.x, 2, 1, fp);
-        fread(&level.levelInfo.entry.y, 2, 1, fp);
-        fread(&level.levelInfo.exit.x, 2, 1, fp);
-        fread(&level.levelInfo.exit.y, 2, 1, fp);
+
+        uint16_t entry_x = 0;
+        uint16_t entry_y = 0;
+        uint16_t exit_x = 0;
+        uint16_t exit_y = 0;
+
+        fread(&entry_x, sizeof(uint16_t), 1, fp);
+        fread(&entry_y, sizeof(uint16_t), 1, fp);
+        fread(&exit_x, sizeof(uint16_t), 1, fp);
+        fread(&exit_y, sizeof(uint16_t), 1, fp);
+
+        Door *entry = new Door(sf::Vector2f(entry_x, entry_y));
+        Door *exit = new Door(sf::Vector2f(exit_x, exit_y));
+
+        //level.levelInfo.entry = *entry;
+        //level.levelInfo.exit = *exit;
 
         uint16_t sizeOfCollidables = level.header.size - level.levelInfo.collidablesOffset;
-        std::cout << "sizeOfCollidables: " << sizeOfCollidables << std::endl;
-        std::cout << "sizeof(sf::Rect<uint16_t>): " << sizeof(sf::Rect<uint16_t>) << std::endl;
         uint16_t collidablesCount = sizeOfCollidables / sizeof(sf::Rect<uint16_t>);
 
         for (uint16_t i = 0; i < collidablesCount; i++) {
@@ -186,15 +177,9 @@ void Level::Read(Level *pLevel, const char * fileName) {
             level.addCollidable(collidable);
         }
 
-        for (sf::Rect<uint16_t> *collidable: level.collidables) {
-            std::cout << "READ" << std::endl;
-            std::cout << "collidable.left: " << collidable->left << std::endl;
-            std::cout << "collidable.top: " << collidable->top << std::endl;
-            std::cout << "collidable.width: " << collidable->width << std::endl;
-            std::cout << "collidable.height: " << collidable->height << std::endl;
-            std::cout << std::endl;
-        }
+        level.addEntity(static_cast<Entity *>(entry));
+        level.addEntity(static_cast<Entity *>(exit));
     } else {
-        return;
+        assert(false && "File was null");
     }
 }

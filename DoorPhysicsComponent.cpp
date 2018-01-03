@@ -5,14 +5,16 @@
 #include "BunnyPhysicsComponent.hpp"
 #include "BunnyManager.hpp"
 
-DoorPhysicsComponent::DoorPhysicsComponent(Door &door): PhysicsComponent(door), entity_(door) {
+DoorPhysicsComponent::DoorPhysicsComponent(Door &door, sf::Vector2f position): PhysicsComponent(door), entity_(door) {
     /*
     sf::RectangleShape rect(sf::Vector2f(60,60));
     rect.setPosition(sf::Vector2f(60*30,60*16));
     rect.setFillColor(sf::Color(0x80,0xFF,0x80,0x20));
     */
-    x_ = 60*30;
-    y_ = 60*16;
+    //x_ = 60*30;
+    x_ = position.x;
+    //y_ = 60*16;
+    y_ = position.y;
     width_ = height_ = 60;
 
     for (Bunny *bunny: BunnyManager::instance()->bunnies) {

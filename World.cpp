@@ -7,7 +7,7 @@
 #include <sstream>
 
 const bool debug = false;
-const bool logTime = true;
+const bool logTime = false;
 
 World *World::s_instance = nullptr;
 //uint16_t World::currentFrame_ = 0;
