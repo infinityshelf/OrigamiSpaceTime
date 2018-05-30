@@ -10,7 +10,7 @@ class Door;
 class DoorGraphicsComponent;
 
 class DoorPhysicsComponent: public PhysicsComponent,
-                            public MessageDispatcher<BOOL> {
+                            public Dispatcher {
 private:
     void siblingComponentsInitialized() override;
     Door &entity_;

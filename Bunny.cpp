@@ -77,47 +77,44 @@ Bunny::~Bunny() {
         delete component;
     }
 }
-//
-//void Bunny::handleMessage(const Message<INT> &message) {
-//    if (message.description == "teleported") {
-//        assert(message.data_ >= birth_ && message.data_ <= death_);
-//        newState_ = BUNNY_STATE_PLAYING;
-//
-//        Bunny *newBunny = new Bunny(BUNNY_STATE_RECORDING, message.data_, 0xFFFF);
-//        World::instance()->addEntity(newBunny);
-//    }
-//}
 
-void Bunny::handleMessage(const Message<VECTOR2i> &message) {
-    if (message.description == "teleported") {
-        uint16_t currentFrame = World::instance()->currentFrame;
-        assert(currentFrame >= birth_
-            && currentFrame <= death_
-            && "Trying to teleport out of range");
-        newState_ = BUNNY_STATE_PLAYING;
+void Bunny::handleMessage(const MessageBase &message) {
+    const Message<sf::Vector2i>  *vectorMessage = dynamic_cast<const Message<sf::Vector2i> *>(&message);
+    // Message<sf::Vector2i>
+    if (vectorMessage != nullptr) {
+        if (vectorMessage->description == "teleported") {
+            uint16_t currentFrame = World::instance()->currentFrame;
+            assert(currentFrame >= birth_
+                && currentFrame <= death_
+                && "Trying to teleport out of range");
+            newState_ = BUNNY_STATE_PLAYING;
 
-        Bunny *newBunny;
-        newBunny = new Bunny(BUNNY_STATE_RECORDING, currentFrame, 0xFFFF);
-        BunnyPhysicsComponent *physics;
-        physics = newBunny->getComponent<BunnyPhysicsComponent *>();
+            Bunny *newBunny;
+            newBunny = new Bunny(BUNNY_STATE_RECORDING, currentFrame, 0xFFFF);
+            BunnyPhysicsComponent *physics;
+            physics = newBunny->getComponent<BunnyPhysicsComponent *>();
 
-        if (physics) {
-            addHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));
-            dispatchMessage(message);
-            removeHandler(static_cast<MessageHandler<VECTOR2i> *>(physics));
+            if (physics) {
+                addHandler(physics);
+                dispatchMessage(*vectorMessage);
+                removeHandler(physics);
+            }
+            World::instance()->level->addEntity(newBunny);
         }
-        World::instance()->level->addEntity(newBunny);
+
     }
-}
 
-void Bunny::handleMessage(const Message<BOOL> &message) {
-    if (message.description == "teleporting") {
-        if (message.data_ == true) {
-            newState_ = BUNNY_STATE_TELEPORTING;
-        } else {
-            newState_ = BUNNY_STATE_RECORDING;
+    const Message<bool> *boolMessage = dynamic_cast<const Message<bool> *>(&message);
+    // Message<bool>
+    if (boolMessage != nullptr) {
+        if (boolMessage->description == "teleporting") {
+            if (boolMessage->data == true) {
+                newState_ = BUNNY_STATE_TELEPORTING;
+            } else {
+                newState_ = BUNNY_STATE_RECORDING;
+            }
+        } else if (boolMessage->description == "door_collision") {
+            std::cout << "door message recieved!" << std::endl;
         }
-    } else if (message.description == "door_collision") {
-        std::cout << "door message recieved!" << std::endl;
     }
 }

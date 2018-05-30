@@ -15,8 +15,7 @@
 class BunnyPhysicsComponent;
 
 class BunnyInputComponent: public InputComponent,
-                           public MessageDispatcher<VECTOR2i>,
-                           public MessageDispatcher<BOOL>,
+                           public Dispatcher,
                            public BunnyComponent {
 private:
     Bunny &entity_;

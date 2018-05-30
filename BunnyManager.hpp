@@ -10,7 +10,7 @@
 
 class Bunny;
 
-class BunnyManager: public MessageDispatcher<BOOL> {
+class BunnyManager: public Dispatcher {
 private:
     static BunnyManager *s_instance;
     static bool teleporting_;

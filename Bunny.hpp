@@ -17,11 +17,7 @@ enum BunnyState {
     BUNNY_STATE_PLAYING
 };
 
-class Bunny: public Entity,
-             //public MessageHandler<INT>,
-             public MessageHandler<BOOL>,
-             public MessageHandler<VECTOR2i>,
-             public MessageDispatcher<VECTOR2i> {
+class Bunny: public Entity {
 private:
     void initializeComponents();
     //
@@ -35,9 +31,7 @@ private:
     BunnyState state_;
     BunnyState newState_;
     //void setState(BunnyState state);
-    //void handleMessage(const Message<INT> &message) override;
-    void handleMessage(const Message<BOOL> &message) override;
-    void handleMessage(const Message<VECTOR2i> &message) override;
+    void handleMessage(const MessageBase &message) override;
 public:
     //
     // time travel

@@ -9,9 +9,7 @@
 const bool debug = false;
 
 BunnyInputComponent::BunnyInputComponent(Bunny &bunny) : InputComponent(bunny), entity_(bunny) {
-    static_cast<MessageDispatcher<BOOL> *>(this)->addHandler(static_cast<MessageHandler<BOOL> *>(&entity_));
-    static_cast<MessageDispatcher<VECTOR2i> *>(this)->addHandler(static_cast<MessageHandler<VECTOR2i> *>(&entity_));
-    //static_cast<MessageDispatcher<INT> *>(this)->addHandler(static_cast<MessageHandler<INT> *>(&entity_));
+    addHandler(&entity_);
 }
 
 void BunnyInputComponent::update(double elapsed) {
@@ -60,10 +58,9 @@ void BunnyInputComponent::recording() {
     if (input.leftMouseButtonPressed) {
 
         bool data = true;
-        Message<BOOL> teleportMessage(data);
-        teleportMessage.description = "teleporting";
-        static_cast<MessageDispatcher<BOOL> *>(this)->dispatchMessage(teleportMessage);
-
+        Message<bool> teleportMessage(data, "", "teleporting");
+        //teleportMessage.description = "teleporting";
+        dispatchMessage(teleportMessage);
         return;
     }
 
@@ -79,18 +76,17 @@ void BunnyInputComponent::teleporting() {
 
     if (input.leftMouseButtonPressed && physicsComponent_) {
         sf::Vector2i data(BunnyGraphicsComponent::getMousePosition().x, BunnyGraphicsComponent::getMousePosition().y);
-        Message<VECTOR2i> teleportedVecMessage(data);
-        if (debug) std::cout    << "sending a teleport message x: " << teleportedVecMessage.data_.x
-                                << " y: " << teleportedVecMessage.data_.y << std::endl; 
-        teleportedVecMessage.description = "teleported";
-        static_cast<MessageDispatcher<VECTOR2i> *>(this)->dispatchMessage(teleportedVecMessage);
+        Message<sf::Vector2i> teleportedVecMessage(data, "", "teleported");
+        if (debug) std::cout    << "sending a teleport message x: " << teleportedVecMessage.data.x
+                                << " y: " << teleportedVecMessage.data.y << std::endl; 
+        //teleportedVecMessage.description = "teleported";
+        dispatchMessage(teleportedVecMessage);
     } else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 
         bool data = false;
-        Message<BOOL> teleportCancelledMessage(data);
-        teleportCancelledMessage.description = "teleporting";
-
-        static_cast<MessageDispatcher<BOOL> *>(this)->dispatchMessage(teleportCancelledMessage);
+        Message<bool> teleportCancelledMessage(data, "", "teleporting");
+        //teleportCancelledMessage.description = "teleporting";
+        dispatchMessage(teleportCancelledMessage);
     }
 
     if (physicsComponent_) {

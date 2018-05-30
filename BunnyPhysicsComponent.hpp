@@ -17,9 +17,7 @@ class BunnyGraphicsComponent;
 class BunnyInputComponent;
 
 class BunnyPhysicsComponent: public PhysicsComponent,
-                             //public MessageHandler<INT>,
-                             //public MessageHandler<BOOL>,
-                             public MessageHandler<VECTOR2i>,
+                             public Handler,
                              public BunnyComponent {
 private:
     World *world_;
@@ -43,9 +41,6 @@ private:
     BunnyGraphicsComponent *graphicsComponent_;
 
     std::vector<sf::Vector2<uint16_t>> recordedPositions_;
-
-    //using MessageHandler<INT>::handleMessage;
-    //using MessageHandler<BOOL>::handleMessage;
 public:
     //void setActive(bool active) { active_ = active; }
     const bool &grounded = grounded_;
@@ -60,9 +55,7 @@ public:
     const int &jumpSpeed = jumpSpeed_;
     const int &maxFallSpeed = maxFallSpeed_;
 
-    //void handleMessage(Message<BOOL> const &message) override;
-    //void handleMessage(Message<INT> const &message) override;
-    void handleMessage(Message<VECTOR2i> const &message) override;
+    void handleMessage(MessageBase const &message) override;
     ~BunnyPhysicsComponent() override;
 
     void recording() override;

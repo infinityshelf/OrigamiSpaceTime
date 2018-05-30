@@ -11,7 +11,7 @@ class Door;
 class DoorPhysicsComponent;
 
 class DoorGraphicsComponent: public GraphicsComponent,
-                             public MessageHandler<BOOL> {
+                             public Handler {
 private:
     sf::Sprite sprite_;
     void siblingComponentsInitialized() override;
@@ -21,6 +21,6 @@ public:
     explicit DoorGraphicsComponent(Door &door);
     ~DoorGraphicsComponent() = default;
     void update(double elapsed) override;
-    void handleMessage(Message<BOOL> const &message) override;
+    void handleMessage(MessageBase const &message) override;
 };
 #endif

@@ -22,10 +22,13 @@ void DoorGraphicsComponent::update(double elapsed) {
     GraphicsComponent::s_window->draw(sprite_);
 };
 
-void DoorGraphicsComponent::handleMessage(Message<BOOL> const &message) {
-    if (message.data_ == true) {
-        sprite_.setTextureRect(sf::IntRect(16,0,16,16));
-    } else {
-        sprite_.setTextureRect(sf::IntRect(0,0,16,16));
+void DoorGraphicsComponent::handleMessage(MessageBase const &message) {
+    const Message<bool> *boolMessage = dynamic_cast<const Message<bool> *>(&message);
+    if (boolMessage != nullptr) {
+        if (boolMessage->data == true) {
+            sprite_.setTextureRect(sf::IntRect(16,0,16,16));
+        } else {
+            sprite_.setTextureRect(sf::IntRect(0,0,16,16));
+        }
     }
 }

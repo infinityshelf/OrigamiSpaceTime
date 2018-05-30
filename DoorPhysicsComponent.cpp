@@ -20,7 +20,7 @@ DoorPhysicsComponent::DoorPhysicsComponent(Door &door, sf::Vector2f position): P
     //height_ = 16;
 
     for (Bunny *bunny: BunnyManager::instance()->bunnies) {
-        addHandler(static_cast<MessageHandler<BOOL> *> (bunny));
+        addHandler(bunny);
     }
 
 }
@@ -82,8 +82,8 @@ void DoorPhysicsComponent::setCollidingWithBunny(bool colliding) {
     if (colliding != collidingWithBunny_) {
         collidingWithBunny_ = colliding;
         // dispatch collided with door
-        Message<BOOL> collidedMessage(colliding);
-        collidedMessage.description = "door_collision";
+        Message<bool> collidedMessage(colliding, "", "door_collision");
+        //collidedMessage.description = "door_collision";
         std::cout << "collided with bunny!, sending message" << ((collidingWithBunny) ? "YES" : "NO") << std::endl;
         dispatchMessage(collidedMessage);
     }

@@ -170,10 +170,14 @@ sf::Vector2f BunnyPhysicsComponent::getStartPosition() {
     return start;
 }
 
-void BunnyPhysicsComponent::handleMessage(Message<VECTOR2i> const &message) {
-    if (message.description == "teleported") {
-        position_ = sf::Vector2f(message.data_.x, message.data_.y);
+void BunnyPhysicsComponent::handleMessage(MessageBase const &message) {
+    const Message<sf::Vector2i> *vectorMessage = dynamic_cast<const Message<sf::Vector2i> *>(&message);
+    if (vectorMessage != nullptr) {
+        if (vectorMessage->description == "teleported") {
+            position_ = sf::Vector2f(vectorMessage->data.x, vectorMessage->data.y);
+        }
     }
+    
 }
 
 BunnyPhysicsComponent::~BunnyPhysicsComponent() = default;
