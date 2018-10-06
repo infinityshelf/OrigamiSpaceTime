@@ -1,0 +1,97 @@
+[
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\main.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\main.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/main.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\Bunny.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\Bunny.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/Bunny.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\BunnyInputComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\BunnyInputComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/BunnyInputComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\BunnyGraphicsComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\BunnyGraphicsComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/BunnyGraphicsComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\BunnyPhysicsComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\BunnyPhysicsComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/BunnyPhysicsComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\World.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\World.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/World.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\BunnyComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\BunnyComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/BunnyComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\BunnyManager.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\BunnyManager.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/BunnyManager.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\Level.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\Level.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/Level.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\Door.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\Door.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/Door.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\DoorPhysicsComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\DoorPhysicsComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/DoorPhysicsComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/OrigamiSpaceTime.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\OrigamiSpaceTime.dir\\DoorGraphicsComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\DoorGraphicsComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/DoorGraphicsComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\Input.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\Input.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/Input.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\TextureManager.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\TextureManager.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/TextureManager.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\Component.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\Component.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/Component.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\GraphicsComponent.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\GraphicsComponent.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/GraphicsComponent.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\EntityManager.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\EntityManager.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/EntityManager.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\CollidableManager.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\CollidableManager.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/CollidableManager.cpp"
+},
+{
+  "directory": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine",
+  "command": "C:\\MinGW\\bin\\g++.exe  -DSFML_STATIC @CMakeFiles/SFML-Engine.dir/includes_CXX.rsp -g   -std=gnu++14 -o CMakeFiles\\SFML-Engine.dir\\FSM.cpp.obj -c C:\\Users\\Estevan\\Documents\\Code\\C++\\OrigamiSpaceTime\\SFML-Engine\\FSM.cpp",
+  "file": "C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/SFML-Engine/FSM.cpp"
+}
+]

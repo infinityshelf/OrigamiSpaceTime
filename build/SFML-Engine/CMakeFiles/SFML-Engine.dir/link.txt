@@ -1,0 +1,2 @@
+C:\MinGW\bin\ar.exe qc libSFML-Engine.a  CMakeFiles/SFML-Engine.dir/Input.cpp.obj CMakeFiles/SFML-Engine.dir/TextureManager.cpp.obj CMakeFiles/SFML-Engine.dir/Component.cpp.obj CMakeFiles/SFML-Engine.dir/GraphicsComponent.cpp.obj CMakeFiles/SFML-Engine.dir/EntityManager.cpp.obj CMakeFiles/SFML-Engine.dir/CollidableManager.cpp.obj CMakeFiles/SFML-Engine.dir/FSM.cpp.obj
+C:\MinGW\bin\ranlib.exe libSFML-Engine.a

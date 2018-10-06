@@ -1,0 +1,6 @@
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/CMakeFiles/OrigamiSpaceTime.dir
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/CMakeFiles/edit_cache.dir
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/CMakeFiles/rebuild_cache.dir
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine/CMakeFiles/rebuild_cache.dir
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine/CMakeFiles/SFML-Engine.dir
+C:/Users/Estevan/Documents/Code/C++/OrigamiSpaceTime/build/SFML-Engine/CMakeFiles/edit_cache.dir

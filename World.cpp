@@ -54,10 +54,10 @@ void World::update(double elapsed, sf::RenderWindow &window) {
 }
 
 World::World()  {
-    level = new Level();
+    level = new Level(1);
     //level->write("Level0.origami");
 
-    Level::Read(level, "Level0.origami");
+    //Level::Read(level, "Level0.origami");
 
     currentFrame_ = 0;
     timeFont.loadFromFile("DroidSansMono.ttf");

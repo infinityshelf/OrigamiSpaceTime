@@ -17,18 +17,17 @@
 // const unsigned int height = 1080;
 
 int main(int argc, const char *argv[]) {
-    std::cout << "bananas" << std::endl;
     std::string windowTitle("Origami Space Time");
     if (argc > 1) {
         windowTitle = std::string(argv[1]);
     }
 
-    sf::RenderWindow window(sf::VideoMode(1920, 1080, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
+	sf::RenderWindow window(sf::VideoMode(1920, 1080, 8), argv[1], sf::Style::Titlebar|sf::Style::Close);
     //window.setSize(sf::Vector2u(width * 3, height * 3));
     window.setPosition(sf::Vector2i(0,0));
 
     window.setFramerateLimit(60);
-    window.setVerticalSyncEnabled(true);
+    window.setVerticalSyncEnabled(false);
     window.setKeyRepeatEnabled(false);
     window.setTitle(windowTitle);
 

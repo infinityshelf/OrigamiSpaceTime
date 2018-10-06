@@ -1,4 +1,5 @@
 #include "Level.hpp"
+#include <cstring>
 
 const unsigned int blockSize = 60;
 const unsigned int width = 1920;
@@ -41,6 +42,21 @@ Level::Level(unsigned int levelId) {
             break;
         }
         case 1: {
+			memcpy(levelInfo.name, "Level 1 ", 7);
+			for (unsigned int i = 0; i < width / blockSize; i++) {
+				for (unsigned int j = 0; j < height / blockSize; j++) {
+					if (i == 0 || j == 0 || i == (width / blockSize) - 1 || j == (height / blockSize) - 1 || (i == 30 && j == 5)) {
+						addCollidable(new sf::Rect<uint16_t>(i * blockSize, j * blockSize, blockSize, blockSize));
+					}
+				}
+			}
+
+			entry_ = new Door(sf::Vector2f(60 * 2, 60 * 16));
+			exit_ = new Door(sf::Vector2f(60 * 30, 60 * 4));
+			//levelInfo.entry = *entry;
+			//levelInfo.exit = *exit;
+			addEntity(static_cast<Entity *>(entry_));
+			addEntity(static_cast<Entity *>(exit_));
             break;
         }
         default: {
